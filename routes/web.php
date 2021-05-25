@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\TourController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
+// Route::get('/managetour', function () {
+//     return view('pages/tourManage');
+// });
+Route::get('/managetour', [TourController::class, 'index']);
