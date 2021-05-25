@@ -1,0 +1,21 @@
+
+GMAIL
+email : webadmairlangga@gmail.com
+pass :airlangga@#123
+
+NIAGAHOSTER akun
+email : webadmairlangga@gmail.com
+pass :airlangga@#123
+
+domain Mail
+email:admin@airlanggasejahtera.com
+pass :adminairlangga@#123
+
+SSH Putty
+IP 151.106.118.172 
+PORT 65002
+passphrase : katama1611
+
+NIAGAHOSTER USERNAME
+user : u1359457
+pass : airlangga@#123
