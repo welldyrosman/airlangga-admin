@@ -25,6 +25,7 @@
   <!-- /.login-logo -->
   <div class="card" style="border-radius: 10px;">
     <div class="card-body login-card-body" style="background-color:#ffffff00 !important">
+
       <p class="login-box-msg">Sign in to start your session</p>
       <form action="/loginservice" method="post">
         @csrf

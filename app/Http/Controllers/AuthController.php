@@ -25,7 +25,16 @@ class AuthController extends Controller
         if(session()->has('admin')) {
             return redirect('/home');
         }else{
-            return view("login");
+            $ciphering = "AES-128-CTR";
+            $iv_length = openssl_cipher_iv_length($ciphering);
+            $options = 0;
+            $encryption_iv = '1234567891011121';
+            $encryption_key = "AdministratorKey";
+            $encryption = openssl_encrypt("Airlangga@#123", $ciphering,
+            $encryption_key, $options, $encryption_iv);
+
+
+            return view("login",['title'=>$encryption]);
         }
     }
     public function loginservice(Request $request){
@@ -33,7 +42,13 @@ class AuthController extends Controller
         $user_pass=$request->input('user_pass');
         $check=DB::table('admin')->where('userid',$user_nm)->first();
         if($check){
-            $dbpass=Crypt::decryptString($check->password);
+            $ciphering = "AES-128-CTR";
+            $iv_length = openssl_cipher_iv_length($ciphering);
+            $decryption_iv = '1234567891011121';
+            $options = 0;
+            $decryption_key = "AdministratorKey";
+            $dbpass=openssl_decrypt ($check->password, $ciphering,
+            $decryption_key, $options, $decryption_iv);
             if($user_pass!=$dbpass){
                 return view('login');
             }
@@ -45,6 +60,7 @@ class AuthController extends Controller
     }
     public function home(Request $request){
         if(session()->has('admin')) {
+
             return view("index");
         }else{
             return redirect('/');
