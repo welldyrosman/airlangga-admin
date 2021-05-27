@@ -9,20 +9,21 @@ use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
+
     public function index(Request $request){
         $token = $request->session()->token();
         $token = csrf_token();
         if(session()->has('admin')) {
-            return view("index");
+            return redirect('/home');
         }else{
-            return view("login");
+            return redirect('/');
         }
     }
     public function login(Request $request){
         $token = $request->session()->token();
         $token = csrf_token();
         if(session()->has('admin')) {
-            return view("index");
+            return redirect('/home');
         }else{
             return view("login");
         }
@@ -37,20 +38,20 @@ class AuthController extends Controller
                 return view('login');
             }
             $request->session()->put('admin',$check);
-            return view("index");
+            return redirect('/home');
         }else{
-            return view('login');
+            return redirect('/');
         }
     }
     public function home(Request $request){
         if(session()->has('admin')) {
             return view("index");
         }else{
-            return view("login");
+            return redirect('/');
         }
     }
     public function logout(Request $request){
         session()->forget('admin');
-        return view("login");
+        return redirect('/');
     }
 }
