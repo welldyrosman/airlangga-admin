@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class TourController extends Controller
 {
+    //tambah code ini di setiap controller view
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
@@ -16,6 +17,8 @@ class TourController extends Controller
             return $next($request);
         });
     }
+    //end
+
     public function index(){
         $datatour= DB::table('travel_pack')->paginate(2);
         $data=array(
@@ -23,5 +26,12 @@ class TourController extends Controller
             'datarows'=>$datatour
         );
         return view('pages/tourManage',$data);
+    }
+
+    public function addnewtour(){
+        $data=array(
+            'title'=>'Tambah Tour Baru'
+        );
+        return view('pages/tourPackMaintain', $data);
     }
 }

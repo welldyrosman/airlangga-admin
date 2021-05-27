@@ -1842,6 +1842,10 @@ module.exports = {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+$(function () {
+  $('#summernote').summernote();
+});
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":

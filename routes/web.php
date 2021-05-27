@@ -24,3 +24,4 @@ Route::get('/logout', [AuthController::class, 'logout']);
 //     return view('pages/tourManage');
 // });
 Route::get('/managetour', [TourController::class, 'index']);
+Route::get('/addnewtour', [TourController::class, 'addnewtour']);
