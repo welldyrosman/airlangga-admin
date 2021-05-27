@@ -16,9 +16,11 @@
         </div><!-- /.row -->
         </div><!-- /.container-fluid -->
     </div>
+
     <div class="content">
         <div class="container-fluid">
             <div class="row">
+                {{ session()->get('name') }}
                 <div class="col-lg-3 col-6">
                 <!-- small box -->
                 <div class="small-box bg-info">

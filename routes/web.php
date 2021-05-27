@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\TourController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -15,9 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/home',[AuthController::class, 'home']);
+Route::post('/loginservice',[AuthController::class, 'loginservice']);
+Route::get('/', [AuthController::class, 'login']);
+Route::get('/logout', [AuthController::class, 'logout']);
 // Route::get('/managetour', function () {
 //     return view('pages/tourManage');
 // });
