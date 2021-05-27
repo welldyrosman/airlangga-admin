@@ -37,9 +37,9 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="/facility" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Inactive Page</p>
+                    <p>Fasilitas</p>
                     </a>
                 </li>
                 </ul>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\TourController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FacilityController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -25,3 +26,6 @@ Route::get('/logout', [AuthController::class, 'logout']);
 // });
 Route::get('/managetour', [TourController::class, 'index']);
 Route::get('/addnewtour', [TourController::class, 'addnewtour']);
+
+
+Route::get('/facility', [FacilityController::class, 'index']);
