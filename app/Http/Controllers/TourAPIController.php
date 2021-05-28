@@ -30,4 +30,14 @@ class TourAPIController extends Controller
         $ret->data=$arg;
         return response()->json($ret);
     }
+    public function addfacility(Request $request){
+        $fac_nm=$request->input('fac_nm');
+        DB::table('facility')->insert([
+            'fac_nm'=>$fac_nm,
+            'fac_kind'=>'Tour',
+            'use_mk'=>1,
+            'add_time'=>Carbon::now()
+        ]);
+        return response()->json("Ok");
+    }
 }

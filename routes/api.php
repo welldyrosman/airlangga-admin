@@ -23,3 +23,5 @@ Route::get('/package', [TourAPIController::class, 'getpack']);
 Route::get('/package/{id}', [TourAPIController::class, 'getpackbyid']);
 Route::put('/package/{id}', [TourAPIController::class, 'updpack']);
 Route::delete('/package/{id}', [TourAPIController::class, 'delpack']);
+
+Route::post('/facility', [TourAPIController::class, 'addfacility']);

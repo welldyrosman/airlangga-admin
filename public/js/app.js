@@ -1834,18 +1834,20 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./resources/js/app.js":
-/*!*****************************!*\
-  !*** ./resources/js/app.js ***!
-  \*****************************/
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
-
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+/***/ "./resources/js/Tools.js":
+/*!*******************************!*\
+  !*** ./resources/js/Tools.js ***!
+  \*******************************/
+/***/ (() => {
 
 $(function () {
-  $('#pack_desc').summernote();
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
 
-  function getFormData($form) {
+  getFormData = function getFormData($form) {
     var unindexed_array = $form.serializeArray();
     var indexed_array = {};
     $.map(unindexed_array, function (n, i) {
@@ -1858,30 +1860,53 @@ $(function () {
     }
 
     return form;
-  }
+  };
 
-  $.ajaxSetup({
-    headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
+  callService = function callService(url, data, method) {
+    return new Promise(function (resolve, reject) {
+      $.ajax({
+        data: getFormData(data),
+        url: url,
+        type: method,
+        processData: false,
+        mimeType: "multipart/form-data",
+        contentType: false,
+        success: function success(ret) {
+          resolve(ret);
+        },
+        error: function error(_error) {
+          reject(_error);
+        }
+      });
+    });
+  };
+});
+
+/***/ }),
+
+/***/ "./resources/js/app.js":
+/*!*****************************!*\
+  !*** ./resources/js/app.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
+__webpack_require__(/*! ./Tools */ "./resources/js/Tools.js");
+
+$(function () {
+  $('#pack_desc').summernote();
+  $('#btnSaveFac').click(function (e) {
+    $(this).html('Sending..');
+    callService('/api/facility', $('#formfacility'), "POST").then(function (ret) {
+      console.log(ret);
+      $('#btnSaveFac').html('Simpan Data');
+    });
   });
   $('#saveBtn').click(function (e) {
     $(this).html('Sending..');
-    $.ajax({
-      data: getFormData($('#formPack')),
-      url: '/api/package',
-      type: "POST",
-      processData: false,
-      mimeType: "multipart/form-data",
-      contentType: false,
-      success: function success(ret) {
-        console.log(ret);
-        $('#saveBtn').html('Simpan Data');
-      },
-      error: function error(_error) {
-        console.log(_error);
-        $('#saveBtn').html('Simpan Data');
-      }
+    callService('/api/package', $('#formPack'), "POST").then(function (ret) {
+      $('#saveBtn').html('Simpan Data');
     });
   });
 });

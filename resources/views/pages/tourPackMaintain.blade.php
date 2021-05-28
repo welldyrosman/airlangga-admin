@@ -89,7 +89,10 @@
                             </div>
                         @endfor
                         </div>
-                        <button type="button" id="addfac" class="btn btn-sm btn-info">Tambah Facility</button>
+                            <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#modalfacility">
+                                <i class="fas fa-plus"></i>
+                                Tambah Fasilitas
+                            </button>
                         <hr>
                         <div class="row">
                             <div class="col"></div>
@@ -103,6 +106,26 @@
         </form>
     </div>
 </div>
+<div class="modal fade" id="modalfacility" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Tambah Fasilitas</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="formfacility" name="formfacility">
+              <label>Nama Fasilitas</label>
+              <input type="text" id="fac_nm" name="fac_nm" class="form-control">
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+          <button type="button" id="btnSaveFac" class="btn btn-primary">Simpan Fasilitas</button>
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection
 
 
