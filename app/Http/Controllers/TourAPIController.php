@@ -18,39 +18,51 @@ class TourAPIController extends Controller
     }
     public function newpack(Request $request){
         $ret=new stdClass;
-        $fileName="XXX";
+        $txt="";
+        for($i=1;$i<5;$i++){
+            if($request->hasFile('img_'.$i)) {
+                $file      = $request->file('img_'.$i);
+                $imagesz = getimagesize($file);
+                if($file->getSize()>500000){
+                    throw new Exception("Ukuran Gambar Tidak Boleh Lebih dari 500Kb");
+                }
+                if($imagesz[0]*1!=370 && $imagesz[1]*1!=300){
+                    throw new Exception("Dimensi Gambar Harus 370 x 300 px");
+                }
+                $widthxheight = $imagesz[0].' x '.$imagesz[1];
+                $txt.=','.$widthxheight.'['.$file->getSize().']';
+            }
+        }
         for($i=1;$i<5;$i++){
             if($request->hasFile('img_'.$i)) {
                 $file      = $request->file('img_'.$i);
                 $ext = $file->getClientOriginalExtension();
                 $fileName =  '370x300'.time().'img'.$i.'.'.$ext;
+                $imgsize=$file->getSize();
+                $imgdata=array(
+                    'file_nm'=>$fileName,
+                );
+                // DB::table('image_bank')->insert($imgdata);
                 $file->storeAs('images/370x300', $fileName);
-                //$request['img_'.$i]->storeAs('images/370x300', $fileName);
             }
         }
-        $ret->dd=$fileName;
-        // if ($request->file('pack_cov')) {
-        //     throw new Exception("EXIST");
-        // }
-        // throw new Exception("STOP");
-        // $pack_nm=$request->input('pack_nm');
-        // $pack_time=$request->input('pack_time');
-        // $pack_price=$request->input('pack_price');
-        // $pack_city=$request->input('pack_city');
-        // $pack_desc=$request->input('pack_desc');
-        // $pack_vid=$request->input('pack_vid');
-        // $arg=array(
-        //     "pack_nm"=>$pack_nm,
-        //     "city"=>$pack_city,
-        //     "price"=>$pack_price,
-        //     "pack_desc"=>$pack_desc,
-        //     "add_time"=>Carbon::now(),
-        //     "vid_url"=>$pack_vid
-        // );
-        // DB::table('travel_pack')->insert($arg);
-        // $ret->data=$arg;
+        $pack_nm=$request->input('pack_nm');
+        $pack_time=$request->input('pack_time');
+        $pack_price=$request->input('pack_price');
+        $pack_city=$request->input('pack_city');
+        $pack_desc=$request->input('pack_desc');
+        $pack_vid=$request->input('pack_vid');
+        $arg=array(
+            "pack_nm"=>$pack_nm,
+            "city"=>$pack_city,
+            "price"=>$pack_price,
+            "pack_desc"=>$pack_desc,
+            "add_time"=>Carbon::now(),
+            "vid_url"=>$pack_vid
+        );
+        //DB::table('travel_pack')->insert($arg);
         return Response()->json([
-            "STATUS" => "OK"
+            "STATUS" =>  $txt
         ], Response::HTTP_OK);
 
     }
