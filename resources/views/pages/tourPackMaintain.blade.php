@@ -18,7 +18,7 @@
         </div><!-- /.container-fluid -->
     </div>
     <div class="content">
-        <form id="formPack" name="formPack">
+        <form id="formPack" name="formPack" enctype="multipart/form-data">
             @csrf
             <div class="container-fluid">
                 <div class="row">
@@ -27,7 +27,7 @@
                         <div class="row">
                             <div class="col-3">
                                 <figure class="figure">
-                                    <img src="assets/img/imgdefault.png" class="figure-img img-fluid rounded" alt="...">
+                                    <img src="assets/img/imgdefault.png" id="img_cov" class="figure-img img-fluid rounded" alt="...">
                                     <figcaption class="figure-caption text-end">A caption for the above image.</figcaption>
                                 </figure>
                             </div>
@@ -51,20 +51,20 @@
                             </div>
                         </div>
                         <label>Cover</label>
-                        <input type="file" class="form-control"/>
+                        <input type="file" id="pack_cov" name="pack_cov" class="form-control"/>
                         <label>Gambar 1</label>
-                        <input type="file" class="form-control"/>
+                        <input type="file" id="img_1" name="img_1" class="form-control"/>
                         <label>Gambar 2</label>
-                        <input type="file" class="form-control"/>
+                        <input type="file" id="img_2" name="img_2" class="form-control"/>
                         <label>Gambar 3</label>
-                        <input type="file" class="form-control"/>
+                        <input type="file" id="img_3" name="img_3" class="form-control"/>
                         <hr>
                         <label>Video</label>
                         <div class="embed-responsive embed-responsive-16by9">
                             <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen></iframe>
                         </div>
                         <label>Video URL</label>
-                        <input type="text" class="form-control"/>
+                        <input type="text" id="pack_vid" name="pack_vid" class="form-control"/>
                     </div>
                     <div class="col-md-6">
                         <label>Nama Tour</label>
@@ -80,14 +80,14 @@
 
                         </textarea>
                         <div class="row" style="padding-left: 5%">
-                        @for ($i = 0; $i <= 10; $i++)
+                        @foreach ($facilities as $fac)
                             <div class="col-sm-4">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" name="{{'x'.$i}}" id="{{'x'.$i}}">
-                                    <label class="form-check-label" for="{{'x'.$i}}">Default switch checkbox input</label>
+                                    <input class="form-check-input" type="checkbox" name="{{'F'.$fac->id}}" id="{{'F'.$fac->id}}">
+                                    <label class="form-check-label" for="{{'F'.$fac->id}}">{{$fac->fac_nm}}</label>
                                 </div>
                             </div>
-                        @endfor
+                        @endForeach
                         </div>
                             <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#modalfacility">
                                 <i class="fas fa-plus"></i>

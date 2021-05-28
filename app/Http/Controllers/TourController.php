@@ -24,16 +24,19 @@ class TourController extends Controller
         $token = $request->session()->token();
         $token = csrf_token();
         $datatour= DB::table('travel_pack')->paginate(2);
+
         $data=array(
             'title'=>'Pengaturan Tour and Travel',
-            'datarows'=>$datatour
+            'datarows'=>$datatour,
         );
         return view('pages/tourManage',$data);
     }
 
     public function addnewtour(){
+        $dataFacility= DB::table('facility')->where('fac_kind','Tour')->get();
         $data=array(
-            'title'=>'Tambah Tour Baru'
+            'title'=>'Tambah Tour Baru',
+            'facilities'=>$dataFacility
         );
         return view('pages/tourPackMaintain', $data);
     }
