@@ -51,13 +51,13 @@
                             </div>
                         </div>
                         <label>Cover</label>
-                        <input type="file" id="pack_cov" name="pack_cov" class="form-control"/>
-                        <label>Gambar 1</label>
                         <input type="file" id="img_1" name="img_1" class="form-control"/>
-                        <label>Gambar 2</label>
+                        <label>Gambar 1</label>
                         <input type="file" id="img_2" name="img_2" class="form-control"/>
-                        <label>Gambar 3</label>
+                        <label>Gambar 2</label>
                         <input type="file" id="img_3" name="img_3" class="form-control"/>
+                        <label>Gambar 3</label>
+                        <input type="file" id="img_4" name="img_4" class="form-control"/>
                         <hr>
                         <label>Video</label>
                         <div class="embed-responsive embed-responsive-16by9">

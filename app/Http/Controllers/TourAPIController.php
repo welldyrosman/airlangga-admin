@@ -19,13 +19,14 @@ class TourAPIController extends Controller
     public function newpack(Request $request){
         $ret=new stdClass;
         $fileName="XXX";
-        if($request->hasFile('pack_cov')) {
-            $fileName =  '370x300'.time().'.'.$request->pack_cov->extension();
-            $request->pack_cov->storeAs('images/370x300', $fileName);
-            return Response()->json([
-                "image" => $fileName
-            ], Response::HTTP_OK);
-
+        for($i=1;$i<5;$i++){
+            if($request->hasFile('img_'.$i)) {
+                $file      = $request->file('img_'.$i);
+                $ext = $file->getClientOriginalExtension();
+                $fileName =  '370x300'.time().'img'.$i.'.'.$ext;
+                $file->storeAs('images/370x300', $fileName);
+                //$request['img_'.$i]->storeAs('images/370x300', $fileName);
+            }
         }
         $ret->dd=$fileName;
         // if ($request->file('pack_cov')) {
@@ -48,7 +49,10 @@ class TourAPIController extends Controller
         // );
         // DB::table('travel_pack')->insert($arg);
         // $ret->data=$arg;
-        return response()->json($ret);
+        return Response()->json([
+            "STATUS" => "OK"
+        ], Response::HTTP_OK);
+
     }
     public function addfacility(Request $request){
         $fac_nm=$request->input('fac_nm');
