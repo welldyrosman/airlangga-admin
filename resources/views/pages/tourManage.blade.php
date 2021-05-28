@@ -40,14 +40,13 @@
                     </thead>
                     <tbody>
                         @foreach ($datarows as $item)
-
                         <tr>
                             <td>{{($datarows->currentPage()*$datarows->count())-$datarows->count()+$loop->iteration }}</td>
-                            <td></td>
+                            <td>{{'TRVL'.$item->id}}</td>
                             <td>{{$item->pack_nm}}</td>
                             <td>{{$item->city}}</td>
-                            <td></td>
-                            <td></td>
+                            <td>{{$item->price}}</td>
+                            <td>{{$item->pack_desc}}</td>
                             <td></td>
                         </tr>
                         @endforeach

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use stdClass;
 
 class TourController extends Controller
 {
@@ -19,7 +20,9 @@ class TourController extends Controller
     }
     //end
 
-    public function index(){
+    public function index(Request $request){
+        $token = $request->session()->token();
+        $token = csrf_token();
         $datatour= DB::table('travel_pack')->paginate(2);
         $data=array(
             'title'=>'Pengaturan Tour and Travel',
@@ -34,4 +37,5 @@ class TourController extends Controller
         );
         return view('pages/tourPackMaintain', $data);
     }
+
 }
