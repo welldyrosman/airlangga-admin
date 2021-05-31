@@ -1931,14 +1931,18 @@ $(function () {
   });
   timecount = 0;
   $(document).on('click', '.butdeldate', function (e) {
-    alert();
+    var id = this.id.split("_")[1];
+    var delid = "#pack_time_" + id; //alert(delid)
+
+    $(delid).remove();
+    $('#' + this.id).remove();
   }); // $('.butdeldate').click(function(e){
   //     alert();
   // })
 
   $('#btntime').click(function (e) {
     timecount++;
-    $("#contime").append("\n            <div class=\"row\">\n                <div class=\"col-10\">\n                    <input type=\"date\" id=\"pack_time\" name=\"pack_time_" + timecount + "\" class=\"form-control form-control-sm\"/>\n                </div>\n                <div class=\"col-2\">\n                    <button type=\"button\" id=\"btn_time_" + timecount + "\" class=\"btn btn-danger butdeldate\"><i class=\"fas fa-minus\"></i></button>\n                </div>\n            </div>\n            ");
+    $("#contime").append("\n            <div class=\"row\">\n                <div class=\"col-10\">\n                    <input type=\"date\" id=\"pack_time_" + timecount + "\" name=\"pack_time_" + timecount + "\" class=\"form-control form-control-sm\"/>\n                </div>\n                <div class=\"col-2\">\n                    <button type=\"button\" id=\"btntime_" + timecount + "\" class=\"btn btn-danger butdeldate\"><i class=\"fas fa-minus\"></i></button>\n                </div>\n            </div>\n            ");
   });
   $('#saveBtn').click(function (e) {
     $(this).html('Sending..');
@@ -1946,7 +1950,7 @@ $(function () {
     var obj = toolToObj($('#formPack'));
     var listFac = [];
     var notestr = null;
-    debugger;
+    var listdate = [];
 
     for (var p in obj) {
       p.startsWith("F") && (obj["NF" + p.substr(1)] && (note = obj["NF" + p.substr(1)]), listFac.push({
@@ -1957,11 +1961,12 @@ $(function () {
         id: 1 * p.substr(2),
         note: obj[p],
         status: false
-      });
+      }), p.startsWith("pack_time") && listdate.push(obj[p]);
     }
 
     var data = new FormData($('#formPack')[0]);
     data.append('listFac', JSON.stringify(listFac));
+    data.append('listDate', JSON.stringify(listdate));
     callService('/api/package', data, "POST").then(function (ret) {
       alert(ret);
       $('#saveBtn').html('Simpan Data');

@@ -29,6 +29,7 @@ class TourAPIController extends Controller
             $pack_desc=$request->input('pack_desc');
             $pack_vid=$request->input('pack_vid');
             $pack_fac=json_decode($request->input('listFac'));
+            $pack_date=json_decode($request->input('listDate'));
             $iscover=null;
             if($request->has('iscover')){
                 $iscover=$request->input('iscover');
@@ -50,7 +51,12 @@ class TourAPIController extends Controller
                 "vid_url"=>$pack_vid
             );
             $idtour=DB::table('travel_pack')->insertGetId($arg);
-
+            foreach($pack_date as $dates){
+                DB::table('travel_time')->insert([
+                    'travel_id'=>$idtour,
+                    'travel_time'=>$dates
+                ]);
+            }
             foreach($pack_fac as $fac){
                 DB::table('travel_facility')->insert([
                     'travel_id'=>$idtour,
@@ -104,7 +110,7 @@ class TourAPIController extends Controller
                         "iscover"=>$i==$iscover?1:0,
                         "note"=>$note
                     ]);
-                    $file->storeAs($path, $fileName);
+                    $file->storeAs('public/'.$path, $fileName);
                 }
             }
             DB::commit();

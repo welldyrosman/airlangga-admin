@@ -26,15 +26,18 @@
                     <div class="col-md-6">
                         <label>Gambar</label>
                         <div class="row">
+                            @foreach ($imagelist as $img)
+                                <div class="col-3">
+                                    <figure class="figure">
+                                        <img src="{{$isNew?URL::asset('assets/img/imgdefault.png'):asset('storage/'.$img->path.'/'.$img->file_nm)}}" id="{{'view_img_'.$loop->iteration}}" class="figure-img img-fluid rounded" alt="...">
+                                        <figcaption class="figure-caption text-end">A caption for the above image.</figcaption>
+                                    </figure>
+                                </div>    
+                            @endforeach
+                            
                             <div class="col-3">
                                 <figure class="figure">
-                                    <img src="assets/img/imgdefault.png" id="view_img_1" class="figure-img img-fluid rounded" alt="...">
-                                    <figcaption class="figure-caption text-end">A caption for the above image.</figcaption>
-                                </figure>
-                            </div>
-                            <div class="col-3">
-                                <figure class="figure">
-                                    <img src="assets/img/imgdefault.png" id="view_img_2" class="figure-img img-fluid rounded" alt="...">
+                                    <img src="{{URL::asset('assets/img/imgdefault.png')}}" id="view_img_2" class="figure-img img-fluid rounded" alt="...">
                                     <figcaption class="figure-caption text-end">A caption for the above image.</figcaption>
                                 </figure>
                             </div>
@@ -69,7 +72,7 @@
                         <hr>
                         <label>Video</label>
                         <div class="embed-responsive embed-responsive-16by9">
-                            <iframe class="embed-responsive-item" src="{{$isNew?null:$datatour->vid_url}}" allowfullscreen></iframe>
+                            <iframe class="embed-responsive-item" src="{{$isNew?null:'https://www.youtube.com/embed/LI3uD9Yj-G8'}}" allowfullscreen></iframe>
                         </div>
                         <label>Video URL</label>
                         <input type="text" id="pack_vid" name="pack_vid" value="{{$isNew?null:$datatour->vid_url}}" class="form-control"/>
