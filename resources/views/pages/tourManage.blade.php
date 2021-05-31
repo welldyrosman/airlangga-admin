@@ -45,9 +45,9 @@
                             <td>{{'TRVL'.$item->id}}</td>
                             <td>{{$item->pack_nm}}</td>
                             <td>{{$item->city}}</td>
-                            <td>{{$item->price}}</td>
+                            <td>{{number_format($item->price)}}</td>
                             <td>{{$item->pack_desc}}</td>
-                            <td></td>
+                            <td><a href="{{'editpack/'.$item->id}}" class="btn btn-sm btn-info"><i class="fas fa-edit"></i>Edit</a></td>
                         </tr>
                         @endforeach
                     </tbody>

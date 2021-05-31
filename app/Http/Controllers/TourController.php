@@ -33,10 +33,35 @@ class TourController extends Controller
     }
 
     public function addnewtour(){
-        $dataFacility= DB::table('facility')->where('fac_kind','Tour')->get();
+        $dataFacility= DB::table('facility')->where('fac_kind','Tour')
+        ->get();
         $data=array(
             'title'=>'Tambah Tour Baru',
-            'facilities'=>$dataFacility
+            'facilities'=>$dataFacility,
+            'isNew'=>true
+        );
+        return view('pages/tourPackMaintain', $data);
+    }
+    public function editTour(Request $request,$id){
+        $dataFacility= DB::table('facility as f')
+        ->leftJoin('travel_facility as tf',function($join) use ($id){
+            $join->on('f.id','=','tf.fac_id');
+            $join->on('tf.travel_id','=',DB::raw($id));
+        })
+        ->select('f.*', 'tf.note', 'tf.use_mk')
+        ->where('f.fac_kind','Tour')
+        ->get();
+
+        $imagelist=DB::table('travel_img as ti')
+        ->leftJoin('image_bank as ib','ti.img_id','=','ib.id')
+        ->where('ti.travel_id',$id)->get();
+        $tourdata=DB::table('travel_pack')->where('id',$id)->first();
+        $data=array(
+            'title'=>'Ubah Tour',
+            'facilities'=>$dataFacility,
+            'isNew'=>false,
+            'datatour'=>$tourdata,
+            'imagelist'=>$imagelist
         );
         return view('pages/tourPackMaintain', $data);
     }

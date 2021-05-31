@@ -1900,14 +1900,28 @@ __webpack_require__(/*! ./Tools */ "./resources/js/Tools.js");
 
 $(function () {
   $('#pack_desc').summernote();
-  $('#pack_cov').change(function () {
+
+  var renderView = function renderView(target, scope) {
     var reader = new FileReader();
 
     reader.onload = function (e) {
-      $('#img_cov').attr('src', e.target.result);
+      $(target).attr('src', e.target.result);
     };
 
-    reader.readAsDataURL(this.files[0]);
+    reader.readAsDataURL(scope.files[0]);
+  };
+
+  $('#img_1').change(function () {
+    renderView('#view_img_1', this);
+  });
+  $('#img_2').change(function () {
+    renderView('#view_img_2', this);
+  });
+  $('#img_3').change(function () {
+    renderView('#view_img_3', this);
+  });
+  $('#img_4').change(function () {
+    renderView('#view_img_4', this);
   });
   $('#btnSaveFac').click(function (e) {
     $(this).html('Sending..');
@@ -1920,18 +1934,25 @@ $(function () {
     console.log($('#formPack').serialize());
     var obj = toolToObj($('#formPack'));
     var listFac = [];
+    var notestr = null;
+    debugger;
 
     for (var p in obj) {
-      if (p.startsWith("F")) {
-        listFac.push(p.substr(1, 1));
-        delete obj[p];
-      }
+      p.startsWith("F") && (obj["NF" + p.substr(1)] && (note = obj["NF" + p.substr(1)]), listFac.push({
+        id: 1 * p.substr(1),
+        note: notestr,
+        status: true
+      })), p.startsWith("NF") && !obj["F" + p.substr(2)] && listFac.push({
+        id: 1 * p.substr(2),
+        note: obj[p],
+        status: false
+      });
     }
 
-    obj.listFac = listFac;
-    var data = toolToFormData(obj);
-    callService('/api/package', new FormData($('#formPack')[0]), "POST").then(function (ret) {
-      console.log(ret);
+    var data = new FormData($('#formPack')[0]);
+    data.append('listFac', JSON.stringify(listFac));
+    callService('/api/package', data, "POST").then(function (ret) {
+      alert(ret);
       $('#saveBtn').html('Simpan Data');
     });
   });

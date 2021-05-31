@@ -26,6 +26,6 @@ Route::get('/logout', [AuthController::class, 'logout']);
 // });
 Route::get('/managetour', [TourController::class, 'index']);
 Route::get('/addnewtour', [TourController::class, 'addnewtour']);
-
+Route::get('/editpack/{id}',[TourController::class,'editTour']);
 
 Route::get('/facility', [FacilityController::class, 'index']);
