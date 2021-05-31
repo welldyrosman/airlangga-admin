@@ -77,8 +77,6 @@
                     <div class="col-md-6">
                         <label>Nama Tour</label>
                         <input type="text" id="pack_nm" name="pack_nm" value="{{$isNew?null:$datatour->pack_nm}}" class="form-control"/>
-                        <label>Waktu Tour</label>
-                        <input type="text" id="pack_time" name="pack_time" class="form-control"/>
                         <label>Kota/Lokasi</label>
                         <input type="text" id="pack_city" name="pack_city" value="{{$isNew?null:$datatour->city}}" class="form-control"/>
                         <label>Harga Pack</label>
@@ -103,6 +101,11 @@
                                 <i class="fas fa-plus"></i>
                                 Tambah Fasilitas
                             </button>
+                        <hr>
+                        <label>Waktu Tour</label>
+                            <button type="button" id="btntime" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></button>
+                            <button type="button" id="btntime" class="btn btn-sm btn-info butdeldate"><i class="fas fa-plus"></i></button>
+                            <div id="contime"></div>
                         <hr>
                         <div class="row">
                             <div class="col"></div>
@@ -137,6 +140,7 @@
     </div>
   </div>
 @endsection
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 
 
 

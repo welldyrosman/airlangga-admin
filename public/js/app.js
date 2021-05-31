@@ -1929,6 +1929,17 @@ $(function () {
       location.reload();
     });
   });
+  timecount = 0;
+  $(document).on('click', '.butdeldate', function (e) {
+    alert();
+  }); // $('.butdeldate').click(function(e){
+  //     alert();
+  // })
+
+  $('#btntime').click(function (e) {
+    timecount++;
+    $("#contime").append("\n            <div class=\"row\">\n                <div class=\"col-10\">\n                    <input type=\"date\" id=\"pack_time\" name=\"pack_time_" + timecount + "\" class=\"form-control form-control-sm\"/>\n                </div>\n                <div class=\"col-2\">\n                    <button type=\"button\" id=\"btn_time_" + timecount + "\" class=\"btn btn-danger butdeldate\"><i class=\"fas fa-minus\"></i></button>\n                </div>\n            </div>\n            ");
+  });
   $('#saveBtn').click(function (e) {
     $(this).html('Sending..');
     console.log($('#formPack').serialize());
