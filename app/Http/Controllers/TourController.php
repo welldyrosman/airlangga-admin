@@ -38,7 +38,7 @@ class TourController extends Controller
         $data=array(
             'title'=>'Tambah Tour Baru',
             'facilities'=>$dataFacility,
-            'imagelist'=>array(),
+            'imagelist'=>array('','','',''),
             'isNew'=>true
         );
         return view('pages/tourPackMaintain', $data);
@@ -52,10 +52,20 @@ class TourController extends Controller
         ->select('f.*', 'tf.note', 'tf.use_mk')
         ->where('f.fac_kind','Tour')
         ->get();
-
+     
         $imagelist=DB::table('travel_img as ti')
         ->leftJoin('image_bank as ib','ti.img_id','=','ib.id')
         ->where('ti.travel_id',$id)->get();
+        $isless=count($imagelist)<4?4-count($imagelist):0;
+       // $arr=(array)$imagelist;
+      //  print_r($arr);
+        for($i=0;$i<$isless;$i++){
+            $obj=new stdClass ();
+            $obj->path=null;
+            $obj->file_nm=null;
+            $obj->note=null;
+            $imagelist->push($obj);
+        }
         $tourdata=DB::table('travel_pack')->where('id',$id)->first();
         $data=array(
             'title'=>'Ubah Tour',

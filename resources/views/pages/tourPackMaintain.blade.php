@@ -29,46 +29,36 @@
                             @foreach ($imagelist as $img)
                                 <div class="col-3">
                                     <figure class="figure">
-                                        <img src="{{$isNew?URL::asset('assets/img/imgdefault.png'):asset('storage/'.$img->path.'/'.$img->file_nm)}}" id="{{'view_img_'.$loop->iteration}}" class="figure-img img-fluid rounded" alt="...">
-                                        <figcaption class="figure-caption text-end">A caption for the above image.</figcaption>
+                                        <img src="{{$isNew||$img->path==null?URL::asset('assets/img/imgdefault.png'):asset('storage/'.$img->path.'/'.$img->file_nm)}}" id="{{'view_img_'.$loop->iteration}}" class="figure-img img-fluid rounded" alt="...">
+                                        <figcaption class="figure-caption text-end">{{$isNew?'Caption Here':$img->note}}</figcaption>
                                     </figure>
                                 </div>    
                             @endforeach
                             
-                            <div class="col-3">
-                                <figure class="figure">
-                                    <img src="{{URL::asset('assets/img/imgdefault.png')}}" id="view_img_2" class="figure-img img-fluid rounded" alt="...">
-                                    <figcaption class="figure-caption text-end">A caption for the above image.</figcaption>
-                                </figure>
-                            </div>
-                            <div class="col-3">
-                                <figure class="figure">
-                                    <img src="assets/img/imgdefault.png" id="view_img_3" class="figure-img img-fluid rounded" alt="...">
-                                    <figcaption class="figure-caption text-end">A caption for the above image.</figcaption>
-                                </figure>
-                            </div>
-                            <div class="col-3">
-                                <figure class="figure">
-                                    <img src="assets/img/imgdefault.png" id="view_img_4" class="figure-img img-fluid rounded" alt="...">
-                                    <figcaption class="figure-caption text-end">A caption for the above image.</figcaption>
-                                </figure>
-                            </div>
+                         
                         </div>
-                        @for($i=1;$i<5;$i++)
-                            <label>Gambar {{$i}}</label>
-                            <input type="file" id="{{'img_'.$i}}" name="{{'img_'.$i}}" class="form-control"/>
+                        @foreach ($imagelist as $img)
+                            <label>Gambar {{$loop->iteration}}</label>
+                            <input type="file" id="{{'img_'.$loop->iteration}}" name="{{'img_'.$loop->iteration}}" class="form-control"/>
+                            <br>
                             <div class="row">
                                 <div class="col-9">
-                                    <input type="text" id="{{'img_'.$i.'_note'}}" name="{{'img_'.$i.'_note'}}" class="form-control form-control-sm" placeholder="Note/Caption"/>
+                                    <input type="text" 
+                                    id="{{'img_'.$loop->iteration.'_note'}}" 
+                                    name="{{'img_'.$loop->iteration.'_note'}}" 
+                                    class="form-control form-control-sm" 
+                                    value="{{$isNew?'':$img->note}}"
+                                    placeholder="Note/Caption"/>
                                 </div>
                                 <div class="col-3" style="padding-left: 5%">
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="radio" name="{{'iscover'}}" value="{{$i}}" id="{{'isCover'.$i}}">
-                                        <label class="form-check-label" for="{{'isCover'.$i}}">Cover</label>
+                                        <input class="form-check-input" type="radio" name="iscover" value="{{$loop->iteration}}" id="{{'isCover'.$loop->iteration}}">
+                                        <label class="form-check-label" for="{{'isCover'.$loop->iteration}}">Cover</label>
                                     </div>
                                 </div>
                             </div>
-                        @endFor
+                            <hr>
+                            @endforeach
                         <hr>
                         <label>Video</label>
                         <div class="embed-responsive embed-responsive-16by9">
@@ -88,6 +78,12 @@
                         <textarea id="pack_desc" name="pack_desc">
                             {{$isNew?null:$datatour->pack_desc}}
                         </textarea>
+                        <hr>
+                        <h4>Fasilitas</h4>  
+                        <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#modalfacility">
+                            <i class="fas fa-plus"></i>
+                            Tambah Fasilitas
+                        </button>
                         <div class="row" style="padding-left: 5%">
                         @foreach ($facilities as $fac)
                             <div class="col-sm-4">
@@ -100,10 +96,7 @@
                             </div>
                         @endForeach
                         </div>
-                            <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#modalfacility">
-                                <i class="fas fa-plus"></i>
-                                Tambah Fasilitas
-                            </button>
+                          
                         <hr>
                         <label>Waktu Tour</label>
                             <button type="button" id="btntime" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></button>

@@ -17,9 +17,11 @@
   <link rel="stylesheet" href="{{asset('vendors/dist/css/adminlte.min.css')}}">
 
 </head>
-<body  class="hold-transition sidebar-mini">
+<body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div id="app" class="wrapper">
-
+  <div class="preloader flex-column justify-content-center align-items-center">
+    <img class="animation__wobble" src="{{asset('assets/img/logo_w.png')}}" alt="AIRLAGGALOGO"  width="250">
+  </div>
   <!-- Navbar -->
   @include('layouts.topMenu')
   <!-- /.navbar -->
@@ -32,6 +34,9 @@
       <div class="container-fluid">
         <section class="content">
             @yield('content')
+            <br>
+            <br>
+            <br>
         </section>
       </div>
     </div>
