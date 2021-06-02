@@ -18,7 +18,7 @@
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="hold-transition light-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
-@include('sweetalert::alert')
+
 <div id="app" class="wrapper">
   <div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__wobble" src="{{asset('assets/img/logo_w.png')}}" alt="AIRLAGGALOGO"  width="250">

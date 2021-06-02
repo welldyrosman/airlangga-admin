@@ -77,9 +77,7 @@
                         <label>Harga Pack</label>
                         <input type="number" id="pack_price" name="pack_price" value="{{$isNew?null:$datatour->price}}" class="form-control"/>
                         <label>Deskripsi</label>
-                        <textarea id="pack_desc" name="pack_desc"  class="form-control">
-                            {{$isNew?null:$datatour->pack_desc}}
-                        </textarea>
+                        <textarea id="pack_desc" name="pack_desc"  class="form-control">{{$isNew?null:$datatour->pack_desc}}</textarea>
                         <hr>
                         <h4>Fasilitas</h4>
                         <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#modalfacility">
