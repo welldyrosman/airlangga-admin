@@ -15,9 +15,10 @@
   <!-- CSS only -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
   <link rel="stylesheet" href="{{asset('vendors/dist/css/adminlte.min.css')}}">
-
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-<body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<body class="hold-transition light-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+@include('sweetalert::alert')
 <div id="app" class="wrapper">
   <div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__wobble" src="{{asset('assets/img/logo_w.png')}}" alt="AIRLAGGALOGO"  width="250">

@@ -1894,13 +1894,24 @@ $(function () {
   \*****************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! ./Tools */ "./resources/js/Tools.js");
 
 $(function () {
-  $('#pack_desc').summernote();
-
+  // $('#pack_desc').summernote()
   var renderView = function renderView(target, scope) {
     var reader = new FileReader();
 
@@ -1936,24 +1947,70 @@ $(function () {
 
     $(delid).remove();
     $('#' + this.id).remove();
-  }); // $('.butdeldate').click(function(e){
-  //     alert();
-  // })
-
+  });
+  $('.butdeldateview').click(function (e) {
+    var id = this.id.split("_")[1];
+    var delid = "#pack_time_view_" + id;
+    $(delid).remove();
+    $('#' + this.id).remove();
+  });
   $('#btntime').click(function (e) {
     timecount++;
-    $("#contime").append("\n            <div class=\"row\">\n                <div class=\"col-10\">\n                    <input type=\"date\" id=\"pack_time_" + timecount + "\" name=\"pack_time_" + timecount + "\" class=\"form-control form-control-sm\"/>\n                </div>\n                <div class=\"col-2\">\n                    <button type=\"button\" id=\"btntime_" + timecount + "\" class=\"btn btn-danger butdeldate\"><i class=\"fas fa-minus\"></i></button>\n                </div>\n            </div>\n            ");
+    $("#contime").append("\n            <div class=\"row\">\n                <div class=\"col-10\">\n                    <input type=\"date\" id=\"pack_time_" + timecount + "\" name=\"pack_time_" + timecount + "\" class=\"form-control form-control-sm\"/>\n                </div>\n                <div class=\"col-2\">\n                    <button type=\"button\" id=\"btntime_" + timecount + "\" class=\"btn btn-danger butdeldate\"><i class=\"fas fa-minus\"></i></button>\n                </div>\n            </div>\n            <br>\n            ");
   });
+
+  function updservice(data, id) {
+    // alert("update service");
+    callService('/api/package/' + id, data, "POST").then(function (ret) {
+      Swal.fire({
+        icon: 'success',
+        title: 'Tour Baru Berhasil Disimpan',
+        showConfirmButton: false,
+        timer: 1500
+      }).then(function (result) {
+        window.location.reload();
+      });
+      $('#saveBtn').html('Simpan Data');
+    })["catch"](function (err) {
+      Swal.fire({
+        icon: 'error',
+        title: JSON.parse(err.responseText).message
+      });
+      $('#saveBtn').html('Simpan Data');
+    });
+    ;
+  }
+
+  function saveservice(data) {
+    callService('/api/package', data, "POST").then(function (ret) {
+      Swal.fire({
+        icon: 'success',
+        title: 'Tour Baru Berhasil Disimpan',
+        showConfirmButton: false,
+        timer: 1500
+      }).then(function (result) {
+        window.location = '/managetour';
+      });
+      $('#saveBtn').html('Simpan Data');
+    })["catch"](function (err) {
+      Swal.fire({
+        icon: 'error',
+        title: JSON.parse(err.responseText).message
+      });
+      $('#saveBtn').html('Simpan Data');
+    });
+  }
+
   $('#saveBtn').click(function (e) {
     $(this).html('Sending..');
-    console.log($('#formPack').serialize());
     var obj = toolToObj($('#formPack'));
+    console.log(obj);
     var listFac = [];
     var notestr = null;
     var listdate = [];
 
     for (var p in obj) {
-      p.startsWith("F") && (obj["NF" + p.substr(1)] && (note = obj["NF" + p.substr(1)]), listFac.push({
+      p.startsWith("F") && (obj["NF" + p.substr(1)] && (notestr = obj["NF" + p.substr(1)]), listFac.push({
         id: 1 * p.substr(1),
         note: notestr,
         status: true
@@ -1966,11 +2023,14 @@ $(function () {
 
     var data = new FormData($('#formPack')[0]);
     data.append('listFac', JSON.stringify(listFac));
+    listdate = _toConsumableArray(new Set(listdate));
     data.append('listDate', JSON.stringify(listdate));
-    callService('/api/package', data, "POST").then(function (ret) {
-      alert(ret);
-      $('#saveBtn').html('Simpan Data');
-    });
+
+    if (obj.isNew == 0) {
+      updservice(data, obj.travel_id);
+    } else if (obj.isNew == 1) {
+      saveservice(data);
+    }
   });
 });
 

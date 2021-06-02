@@ -1,7 +1,8 @@
 require('./bootstrap');
 require('./Tools');
 $(function () {
-    $('#pack_desc').summernote()
+
+   // $('#pack_desc').summernote()
 
     const renderView=(target,scope)=>{
         let reader = new FileReader();
@@ -30,7 +31,6 @@ $(function () {
         });
     });
     timecount=0;
-
     $(document).on('click', '.butdeldate', function(e){
          var id=this.id.split("_")[1];
          var delid="#pack_time_"+id;
@@ -38,9 +38,12 @@ $(function () {
          $(delid).remove();
          $('#'+this.id).remove();
     })
-    // $('.butdeldate').click(function(e){
-    //     alert();
-    // })
+    $('.butdeldateview').click(function(e){
+        var id=this.id.split("_")[1];
+        var delid="#pack_time_view_"+id;
+        $(delid).remove();
+        $('#'+this.id).remove();
+    })
     $('#btntime').click(function(e){
         timecount++;
         $("#contime").append(`
@@ -52,17 +55,57 @@ $(function () {
                     <button type="button" id="btntime_`+timecount+`" class="btn btn-danger butdeldate"><i class="fas fa-minus"></i></button>
                 </div>
             </div>
+            <br>
             `
         );
     })
+    function updservice(data,id){
+       // alert("update service");
+        callService('/api/package/'+id,data,"POST").then((ret)=>{
+            Swal.fire({
+                    icon: 'success',
+                    title: 'Tour Baru Berhasil Disimpan',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then((result) => {
+                    window.location.reload();
+                });
+            $('#saveBtn').html('Simpan Data');
+        }).catch((err)=>{
+            Swal.fire({
+                icon: 'error',
+                title: JSON.parse(err.responseText).message
+                })
+            $('#saveBtn').html('Simpan Data');
+        });;
+    }
+    function saveservice(data){
+        callService('/api/package',data,"POST").then((ret)=>{
+            Swal.fire({
+                icon: 'success',
+                title: 'Tour Baru Berhasil Disimpan',
+                showConfirmButton: false,
+                timer: 1500
+            }).then((result) => {
+                window.location='/managetour';
+            });
+            $('#saveBtn').html('Simpan Data');
+        }).catch((err)=>{
+            Swal.fire({
+                icon: 'error',
+                title: JSON.parse(err.responseText).message
+              })
+            $('#saveBtn').html('Simpan Data');
+        });
+    }
     $('#saveBtn').click(function (e) {
         $(this).html('Sending..');
-        console.log($('#formPack').serialize())
         var obj=toolToObj($('#formPack'));
+        console.log(obj);
         var listFac=[];
         var notestr = null;
         var listdate=[];
-        for(var p in obj) p.startsWith("F") && (obj["NF" + p.substr(1)] && (note = obj["NF" + p.substr(1)]), listFac.push({
+        for(var p in obj) p.startsWith("F") && (obj["NF" + p.substr(1)] && (notestr = obj["NF" + p.substr(1)]), listFac.push({
             id: 1 * p.substr(1),
             note: notestr,
             status:true
@@ -73,11 +116,13 @@ $(function () {
         }),p.startsWith("pack_time")&&listdate.push(obj[p]);
         var data=new FormData($('#formPack')[0]);
         data.append('listFac',JSON.stringify(listFac))
+        listdate=[...new Set(listdate)];
         data.append('listDate',JSON.stringify(listdate))
-        callService('/api/package',data,"POST").then((ret)=>{
-           alert(ret)
-            $('#saveBtn').html('Simpan Data');
-        });
+        if(obj.isNew==0){
+           updservice(data,obj.travel_id);
+        }else if(obj.isNew==1){
+           saveservice(data);
+        }
     })
 });
 

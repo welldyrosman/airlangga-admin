@@ -20,8 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/package', [TourAPIController::class, 'newpack']);
 Route::get('/package', [TourAPIController::class, 'getpack']);
-Route::get('/package/{id}', [TourAPIController::class, 'getpackbyid']);
-Route::put('/package/{id}', [TourAPIController::class, 'updpack']);
+//Route::get('/package/{id}', [TourAPIController::class, 'getpackbyid']);
+Route::post('/package/{id}', [TourAPIController::class, 'updpack']);
 Route::delete('/package/{id}', [TourAPIController::class, 'delpack']);
 
 Route::post('/facility', [TourAPIController::class, 'addfacility']);

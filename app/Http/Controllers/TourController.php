@@ -23,7 +23,7 @@ class TourController extends Controller
     public function index(Request $request){
         $token = $request->session()->token();
         $token = csrf_token();
-        $datatour= DB::table('travel_pack')->paginate(5);
+        $datatour= DB::table('travel_pack')->paginate(2);
 
         $data=array(
             'title'=>'Pengaturan Tour and Travel',
@@ -39,7 +39,9 @@ class TourController extends Controller
             'title'=>'Tambah Tour Baru',
             'facilities'=>$dataFacility,
             'imagelist'=>array('','','',''),
-            'isNew'=>true
+            'isNew'=>1,
+            'travel_id'=>null,
+            'tourtimes'=>array()
         );
         return view('pages/tourPackMaintain', $data);
     }
@@ -52,10 +54,10 @@ class TourController extends Controller
         ->select('f.*', 'tf.note', 'tf.use_mk')
         ->where('f.fac_kind','Tour')
         ->get();
-     
+
         $imagelist=DB::table('travel_img as ti')
         ->leftJoin('image_bank as ib','ti.img_id','=','ib.id')
-        ->where('ti.travel_id',$id)->get();
+        ->where('ti.travel_id',$id) ->orderBy('seq', 'asc')->get();
         $isless=count($imagelist)<4?4-count($imagelist):0;
        // $arr=(array)$imagelist;
       //  print_r($arr);
@@ -67,12 +69,16 @@ class TourController extends Controller
             $imagelist->push($obj);
         }
         $tourdata=DB::table('travel_pack')->where('id',$id)->first();
+        $tourtime=DB::table('travel_time')->where('travel_id',$id)->get();
+
         $data=array(
             'title'=>'Ubah Tour',
             'facilities'=>$dataFacility,
-            'isNew'=>false,
+            'isNew'=>0,
+            'travel_id'=>$id,
             'datatour'=>$tourdata,
-            'imagelist'=>$imagelist
+            'imagelist'=>$imagelist,
+            'tourtimes'=>$tourtime
         );
         return view('pages/tourPackMaintain', $data);
     }

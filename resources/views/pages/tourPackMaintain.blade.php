@@ -21,6 +21,8 @@
     <div class="content">
         <form id="formPack" name="formPack" enctype="multipart/form-data">
             @csrf
+            <input type="hidden" name="travel_id" id="travel_id" value="{{$travel_id}}"/>
+            <input type="hidden" name="isNew" id="isNew" value="{{$isNew}}"/>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-6">
@@ -32,10 +34,10 @@
                                         <img src="{{$isNew||$img->path==null?URL::asset('assets/img/imgdefault.png'):asset('storage/'.$img->path.'/'.$img->file_nm)}}" id="{{'view_img_'.$loop->iteration}}" class="figure-img img-fluid rounded" alt="...">
                                         <figcaption class="figure-caption text-end">{{$isNew?'Caption Here':$img->note}}</figcaption>
                                     </figure>
-                                </div>    
+                                </div>
                             @endforeach
-                            
-                         
+
+
                         </div>
                         @foreach ($imagelist as $img)
                             <label>Gambar {{$loop->iteration}}</label>
@@ -43,16 +45,16 @@
                             <br>
                             <div class="row">
                                 <div class="col-9">
-                                    <input type="text" 
-                                    id="{{'img_'.$loop->iteration.'_note'}}" 
-                                    name="{{'img_'.$loop->iteration.'_note'}}" 
-                                    class="form-control form-control-sm" 
+                                    <input type="text"
+                                    id="{{'img_'.$loop->iteration.'_note'}}"
+                                    name="{{'img_'.$loop->iteration.'_note'}}"
+                                    class="form-control form-control-sm"
                                     value="{{$isNew?'':$img->note}}"
                                     placeholder="Note/Caption"/>
                                 </div>
                                 <div class="col-3" style="padding-left: 5%">
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="radio" name="iscover" value="{{$loop->iteration}}" id="{{'isCover'.$loop->iteration}}">
+                                        <input class="form-check-input" type="radio" name="iscover" {{$img->iscover?'checked':''}}  value="{{$loop->iteration}}" id="{{'isCover'.$loop->iteration}}">
                                         <label class="form-check-label" for="{{'isCover'.$loop->iteration}}">Cover</label>
                                     </div>
                                 </div>
@@ -75,11 +77,11 @@
                         <label>Harga Pack</label>
                         <input type="number" id="pack_price" name="pack_price" value="{{$isNew?null:$datatour->price}}" class="form-control"/>
                         <label>Deskripsi</label>
-                        <textarea id="pack_desc" name="pack_desc">
+                        <textarea id="pack_desc" name="pack_desc"  class="form-control">
                             {{$isNew?null:$datatour->pack_desc}}
                         </textarea>
                         <hr>
-                        <h4>Fasilitas</h4>  
+                        <h4>Fasilitas</h4>
                         <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#modalfacility">
                             <i class="fas fa-plus"></i>
                             Tambah Fasilitas
@@ -96,12 +98,23 @@
                             </div>
                         @endForeach
                         </div>
-                          
+
                         <hr>
                         <label>Waktu Tour</label>
                             <button type="button" id="btntime" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></button>
-                            <button type="button" id="btntime" class="btn btn-sm btn-info butdeldate"><i class="fas fa-plus"></i></button>
-                            <div id="contime"></div>
+                            <div id="contime">
+                                @foreach ($tourtimes as $time)
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <input type="date" id="{{'pack_time_view_'.$loop->iteration}}" value="{{$time->travel_date}}" name="{{'pack_time_view_'.$loop->iteration}}" class="form-control form-control-sm"/>
+                                        </div>
+                                        <div class="col-2">
+                                            <button type="button" id="{{'btntimeview_'.$loop->iteration}}" class="btn btn-danger butdeldateview"><i class="fas fa-minus"></i></button>
+                                        </div>
+                                    </div>
+                                    <br>
+                                @endforeach
+                            </div>
                         <hr>
                         <div class="row">
                             <div class="col"></div>

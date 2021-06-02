@@ -20,39 +20,33 @@
         <div class="container-fluid">
             <a href="/addnewtour" class="btn btn-primary"><i class="fas fa-plus"></i>  Tambah Tour Baru</a>
             <hr>
+            <div class="d-flex justify-content-center">
+                {!! $datarows->links() !!}
+            </div>
             <div class="row">
-                <table
-                    id="table"
-                    class="table table-bordered table-striped"
-                    data-toggle="table"
-                    data-url="json/data1.json"
-                    >
-                    <thead>
-                        <tr>
-                            <th scope="col">No</th>
-                            <th scope="col">Kode Tour</th>
-                            <th scope="col">Nama Tour</th>
-                            <th scope="col">Kota</th>
-                            <th scope="col">Harga</th>
-                            <th scope="col">Deskrpsi</th>
-                            <th scope="col">#</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($datarows as $item)
-                        <tr>
-                            <td>{{($datarows->currentPage()*$datarows->count())-$datarows->count()+$loop->iteration }}</td>
-                            <td>{{'TRVL'.$item->id}}</td>
-                            <td>{{$item->pack_nm}}</td>
-                            <td>{{$item->city}}</td>
-                            <td>{{number_format($item->price)}}</td>
-                            <td>{{$item->pack_desc}}</td>
-                            <td><a href="{{'editpack/'.$item->id}}" class="btn btn-sm btn-info"><i class="fas fa-edit"></i>Edit</a></td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                  <div class="d-flex justify-content-center">
+                @foreach ($datarows as $item)
+                <div class="col-md-3">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h5>{{$item->pack_nm}}</h5>
+                        </div>
+                        <div class="card-body">
+                            <img src="{{URL::asset('assets/img/imgdefault.png')}}"class="figure-img img-fluid rounded"/>
+                            <strong ><i class="fas fa-map-marker-alt mr-1"></i>{{$item->city}}</strong>
+                            <br>
+                            <strong ><i class="fas fa-tags mr-1"></i> Rp.{{number_format($item->price)}}</strong>
+                            <hr>
+                            <p class="text-muted">{{substr($item->pack_desc,1,50)}}...</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="{{'editpack/'.$item->id}}" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i> Lihat</a>
+                            <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Hapus</button>
+                            <button class="btn btn-sm btn-danger"><i class="fas fa-ban"></i> Non Aktif</button>
+                        </div>
+                      </div>
+                </div>
+                @endForeach
+                <div class="d-flex justify-content-center">
                     {!! $datarows->links() !!}
                 </div>
             </div>
