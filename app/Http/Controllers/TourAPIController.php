@@ -225,4 +225,27 @@ class TourAPIController extends Controller
         }
         return response()->json(['id'=>$id,'data'=> $arg,'facility'=>$pack_fac], Response::HTTP_OK);
     }
+    public function delpack(Request $request,$id){
+        DB::beginTransaction();
+        try{
+            $imagelist=DB::table('travel_img')->where('travel_id',$id)->get();
+            foreach($imagelist as $image){
+                $imgsrc=DB::table('image_bank')->where('id',$image->img_id)->first();
+                if (Storage::disk('local')->exists($imgsrc->file_nm)) {
+                    unlink('public/'.$this->path."/".$imgsrc->file_nm);
+                }
+                DB::table('image_bank')->where('id',$imgsrc->id)->delete();
+            }
+            DB::table('travel_img')->where('travel_id',$id)->delete();
+            DB::table('travel_facility')->where('travel_id',$id)->delete();
+            DB::table('travel_time')->where('travel_id',$id)->delete();
+            DB::table('travel_pack')->where('id',$id)->delete();
+            DB::commit();
+        }
+        catch(Exception $e){
+            DB::rollBack();
+            throw $e;
+        }
+        return response()->json(['STATUS'=>'OK'],Response::HTTP_OK);
+    }
 }

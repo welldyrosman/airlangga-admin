@@ -40,7 +40,7 @@
                         </div>
                         <div class="card-footer">
                             <a href="{{'editpack/'.$item->id}}" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i> Lihat</a>
-                            <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Hapus</button>
+                            <button id="{{'btndelpack_'.$item->id}}" type="button" value="{{$item->id}}" class="btn btn-sm btn-danger btndelpack"><i class="fas fa-trash"></i> Hapus</button>
                             <button class="btn btn-sm btn-danger"><i class="fas fa-ban"></i> Non Aktif</button>
                         </div>
                       </div>

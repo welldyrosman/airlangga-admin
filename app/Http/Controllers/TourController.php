@@ -23,7 +23,7 @@ class TourController extends Controller
     public function index(Request $request){
         $token = $request->session()->token();
         $token = csrf_token();
-        $datatour= DB::table('travel_pack')->paginate(2);
+        $datatour= DB::table('travel_pack')->paginate(8);
 
         $data=array(
             'title'=>'Pengaturan Tour and Travel',
