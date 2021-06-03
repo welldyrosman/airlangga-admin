@@ -23,7 +23,17 @@ class TourController extends Controller
     public function index(Request $request){
         $token = $request->session()->token();
         $token = csrf_token();
-        $datatour= DB::table('travel_pack')->paginate(8);
+        $datatour= DB::table('travel_pack as tp')
+        ->leftJoin('travel_img as ti',function($join){
+            $join->on('tp.id','=','ti.travel_id');
+            $join->on('ti.iscover','=',DB::raw('1'));
+        })
+        ->leftJoin('image_bank as ib',function($join){
+            $join->on('ti.img_id','=','ib.id');
+            $join->on('ti.iscover','=',DB::raw('1'));
+        })
+        ->select('tp.*','ib.file_nm')
+        ->paginate(8);
 
         $data=array(
             'title'=>'Pengaturan Tour and Travel',
@@ -57,7 +67,8 @@ class TourController extends Controller
 
         $imagelist=DB::table('travel_img as ti')
         ->leftJoin('image_bank as ib','ti.img_id','=','ib.id')
-        ->where('ti.travel_id',$id) ->orderBy('seq', 'asc')->get();
+        ->where('ti.travel_id',$id) ->orderBy('seq', 'asc')
+        ->get();
         $isless=count($imagelist)<4?4-count($imagelist):0;
        // $arr=(array)$imagelist;
       //  print_r($arr);
@@ -66,6 +77,7 @@ class TourController extends Controller
             $obj->path=null;
             $obj->file_nm=null;
             $obj->note=null;
+            $obj->iscover=0;
             $imagelist->push($obj);
         }
         $tourdata=DB::table('travel_pack')->where('id',$id)->first();

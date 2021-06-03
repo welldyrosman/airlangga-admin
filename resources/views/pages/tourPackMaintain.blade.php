@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="col-3" style="padding-left: 5%">
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="radio" name="iscover" {{$img->iscover?'checked':''}}  value="{{$loop->iteration}}" id="{{'isCover'.$loop->iteration}}">
+                                        <input class="form-check-input" type="radio" name="iscover" {{!$isNew?($img->iscover?'checked':''):''}}  value="{{$loop->iteration}}" id="{{'isCover'.$loop->iteration}}">
                                         <label class="form-check-label" for="{{'isCover'.$loop->iteration}}">Cover</label>
                                     </div>
                                 </div>

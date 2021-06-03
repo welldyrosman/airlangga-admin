@@ -21,8 +21,7 @@ $(function () {
         renderView('#view_img_4',this);
     });
     $('#btnSaveFac').click(function (e) {
-        $(this).html('Sending..');
-        callService('/api/facility',$('#formfacility'),"POST").then((ret)=>{
+        callService('/api/facility',new FormData($('#formfacility')[0]),"POST").then((ret)=>{
             location.reload();
         });
     });
@@ -130,22 +129,54 @@ $(function () {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yoi, Hapus aja!'
           }).then((result) => {
-            callService('/api/package/'+this.value,null,"DELETE").then((ret)=>{
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Tournya sudah Berhasil Dihapus broo',
-                    showConfirmButton: false,
-                    timer: 1500
-                }).then((result) => {
-                    window.location.reload();
+            if (result.isConfirmed) {
+                callService('/api/package/'+this.value,null,"DELETE").then((ret)=>{
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Tournya sudah Berhasil Dihapus broo',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then((result) => {
+                        window.location.reload();
+                    });
+                }).catch((err)=>{
+                    Swal.fire({
+                        icon: 'error',
+                        title: JSON.parse(err.responseText).message
+                        })
                 });
-            }).catch((err)=>{
-                Swal.fire({
-                    icon: 'error',
-                    title: JSON.parse(err.responseText).message
-                  })
-            });
+            }
         });
+    });
+    $('.btndisbpack').click(function (e) {
+        Swal.fire({
+            title: 'Non Aktifkan Pake ini??',
+            text: "Paket Tidak Akan Muncul di tampilan user web",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yoi, Disabled aja!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                callService('/api/dispackage/'+this.value,null,"POST").then((ret)=>{
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Tournya sudah Berhasil di non aktifkan broo',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then((result) => {
+                        window.location.reload();
+                    });
+                }).catch((err)=>{
+                    Swal.fire({
+                        icon: 'error',
+                        title: JSON.parse(err.responseText).message
+                    })
+                });
+            }
+        });
+
     });
 });
 

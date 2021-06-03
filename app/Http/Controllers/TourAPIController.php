@@ -11,6 +11,7 @@ use stdClass;
 use Symfony\Component\Console\Input\Input;
 use Symfony\Component\HttpFoundation\Response;
 use Alert;
+use Facade\FlareClient\Stacktrace\File;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Storage;
 
@@ -40,7 +41,9 @@ class TourAPIController extends Controller
         }
     }
     function addtraveldates($pack_date,$id){
-
+        if(count($pack_date)<1){
+            throw new Exception("Bro Input Tanggal Tournya dulu yah");
+        }
         foreach($pack_date as $dates){
             if($dates==""){
                 throw new Exception("Tanggal TIdak Boleh Kosong");
@@ -145,6 +148,7 @@ class TourAPIController extends Controller
 
 
             $idtour=DB::table('travel_pack')->insertGetId($arg);
+
             $this->addtraveldates($pack_date,$idtour);
             $this->addtravelfacility($pack_fac,$idtour);
             $this->checkingimage($request);
@@ -194,8 +198,8 @@ class TourAPIController extends Controller
                 if($request->hasFile('img_'.$i)) {
                     if($imgsrc){
                         $imgbnk=DB::table('image_bank')->where('id',$imgsrc->img_id)->first();
-                        if (Storage::disk('local')->exists($imgbnk->file_nm)) {
-                            unlink('public/'.$this->path."/".$imgbnk->file_nm);
+                        if (Storage::disk('public')->exists($imgbnk->file_nm)) {
+                            Storage::disk('public')->delete($this->path."/".$imgbnk->file_nm);
                         }
                         DB::table('image_bank')->where('id',$imgsrc->img_id)->delete();
                         DB::table('travel_img')
@@ -231,9 +235,10 @@ class TourAPIController extends Controller
             $imagelist=DB::table('travel_img')->where('travel_id',$id)->get();
             foreach($imagelist as $image){
                 $imgsrc=DB::table('image_bank')->where('id',$image->img_id)->first();
-                if (Storage::disk('local')->exists($imgsrc->file_nm)) {
-                    unlink('public/'.$this->path."/".$imgsrc->file_nm);
+                if (Storage::disk('public')->exists($imgsrc->file_nm)) {
+                    Storage::disk('public')->delete($this->path."/".$imgsrc->file_nm);
                 }
+
                 DB::table('image_bank')->where('id',$imgsrc->id)->delete();
             }
             DB::table('travel_img')->where('travel_id',$id)->delete();
@@ -243,6 +248,19 @@ class TourAPIController extends Controller
             DB::commit();
         }
         catch(Exception $e){
+            DB::rollBack();
+            throw $e;
+        }
+        return response()->json(['STATUS'=>'OK'],Response::HTTP_OK);
+    }
+    public function disabledpack(Request $request,$id){
+        DB::beginTransaction();
+        try{
+            $pack=DB::table('travel_pack')->where('id',$id)->first();
+            $status=$pack->use_mk?0:1;
+            DB::table('travel_pack')->where('id',$id)->update(["use_mk"=>$status]);
+            DB::commit();
+        }catch(Exception $e){
             DB::rollBack();
             throw $e;
         }
