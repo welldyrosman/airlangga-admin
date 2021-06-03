@@ -31,7 +31,6 @@
   @include('layouts.leftMenu')
   <div class="content-wrapper">
     <div class="content">
-        <app></app>
       <div class="container-fluid">
         <section class="content">
             @yield('content')
