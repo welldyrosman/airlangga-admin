@@ -60,7 +60,6 @@ class AuthController extends Controller
     }
     public function home(Request $request){
         if(session()->has('admin')) {
-
             return view("index");
         }else{
             return redirect('/');

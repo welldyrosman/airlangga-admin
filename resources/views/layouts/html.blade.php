@@ -29,33 +29,21 @@
 
   <!-- Main Sidebar Container -->
   @include('layouts.leftMenu')
-
+  <div class="content-wrapper">
+    <div class="content">
+      <div class="container-fluid">
+        <section class="content">
+            @yield('content')
+            <br>
+            <br>
+            <br>
+        </section>
+      </div>
+    </div>
+    <!-- /.content -->
+  </div>
   <!-- /.content-wrapper -->
   @include('layouts.rightMenu')
-  <div class="content-wrapper iframe-mode" data-widget="iframe" data-loading-screen="750">
-    <div class="nav navbar navbar-expand navbar-white navbar-light border-bottom p-0">
-      <div class="nav-item dropdown">
-        <a class="nav-link bg-danger dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Close</a>
-        <div class="dropdown-menu mt-0">
-          <a class="dropdown-item" href="#" data-widget="iframe-close" data-type="all">Close All</a>
-          <a class="dropdown-item" href="#" data-widget="iframe-close" data-type="all-other">Close All Other</a>
-        </div>
-      </div>
-      <a class="nav-link bg-light" href="#" data-widget="iframe-scrollleft"><i class="fas fa-angle-double-left"></i></a>
-      <ul class="navbar-nav overflow-hidden" role="tablist"></ul>
-      <a class="nav-link bg-light" href="#" data-widget="iframe-scrollright"><i class="fas fa-angle-double-right"></i></a>
-      <a class="nav-link bg-light" href="#" data-widget="iframe-fullscreen"><i class="fas fa-expand"></i></a>
-    </div>
-    <div class="tab-content">
-      <div class="tab-empty">
-      </div>
-      <div class="tab-loading">
-        <div>
-          <h2 class="display-4">Tab is loading <i class="fa fa-sync fa-spin"></i></h2>
-        </div>
-      </div>
-    </div>
-  </div>
   <!-- Control Sidebar -->
 
   <!-- /.control-sidebar -->
@@ -70,20 +58,16 @@
 <!-- jQuery -->
 
 <script src="{{asset('vendors/plugins/jquery/jquery.min.js')}}"></script>
-<script src="{{asset('vendors/plugins/jquery-ui/jquery-ui.min.js')}}"></script>
+
 <!-- Bootstrap 4 -->
 <!-- JavaScript Bundle with Popper -->
 
 <!-- AdminLTE App -->
 <script src="{{asset('vendors/dist/js/adminlte.min.js')}}"></script>
-<script src="{{asset('vendors/dist/js/demo.js')}}"></script>
-
 <script src="{{asset('vendors/plugins/summernote/summernote-bs4.min.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 <script src="{{ mix('js/app.js') }}"></script>
-<script>
-    $.widget.bridge('uibutton', $.ui.button)
-  </script>
+
 
 </body>
 </html>
