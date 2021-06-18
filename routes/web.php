@@ -3,6 +3,7 @@
 use App\Http\Controllers\TourController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FacilityController;
+use App\Http\Controllers\StudioController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -27,5 +28,7 @@ Route::get('/logout', [AuthController::class, 'logout']);
 Route::get('/managetour', [TourController::class, 'index']);
 Route::get('/addnewtour', [TourController::class, 'addnewtour']);
 Route::get('/editpack/{id}',[TourController::class,'editTour']);
+
+Route::get('/managestudio', [StudioController::class, 'index']);
 
 Route::get('/facility', [FacilityController::class, 'index']);
