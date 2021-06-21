@@ -1902,6 +1902,8 @@ __webpack_require__(/*! ./travelEvent */ "./resources/js/travelEvent.js");
 
 __webpack_require__(/*! ./studioEvent */ "./resources/js/studioEvent.js");
 
+__webpack_require__(/*! ./faqEvent */ "./resources/js/faqEvent.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -1932,6 +1934,71 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/faqEvent.js":
+/*!**********************************!*\
+  !*** ./resources/js/faqEvent.js ***!
+  \**********************************/
+/***/ (() => {
+
+$(function () {
+  $('#btnsavefaq').click(function (e) {
+    var id = $('#idfaq').val();
+    console.log(id);
+    var method = this.value == "new" ? "/api/faq" : "/api/faq/" + id;
+    callService(method, new FormData($('#formfaq')[0]), "POST").then(function (ret) {
+      Swal.fire({
+        icon: 'success',
+        title: 'FAQ Berhasil di perbarui',
+        showConfirmButton: false,
+        timer: 1500
+      }).then(function (result) {
+        location.reload();
+      });
+    });
+  });
+  $("#addfaq").click(function (e) {
+    $('#btnsavefaq').val("new");
+  });
+  $(".btndelfaq").click(function (e) {
+    var _this = this;
+
+    Swal.fire({
+      title: 'Hapus Data ini?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Iye ,Hapus Aja!'
+    }).then(function (result) {
+      if (result.isConfirmed) {
+        var id = _this.id.split("_")[1];
+
+        callService('/api/faq/' + id, null, "DELETE").then(function (ret) {
+          Swal.fire({
+            icon: 'success',
+            title: 'FAQ Berhasil di hapus',
+            showConfirmButton: false,
+            timer: 1500
+          }).then(function (result) {
+            location.reload();
+          });
+        });
+      }
+    });
+  });
+  $(".btneditfaq").click(function (e) {
+    var obj = JSON.parse($(this).attr('data'));
+    $('#btnsavefaq').val("edit");
+    $('#question').val(obj.subject);
+    $('#answer').val(obj.deskripsi);
+    $('#idfaq').val(obj.id);
+    $('#seq').val(obj.seq);
+    $('#modalfaq').modal('show');
+  });
+});
 
 /***/ }),
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\StudioAPIController;
 use App\Http\Controllers\StudioController;
 use App\Http\Controllers\TourAPIController;
@@ -31,6 +32,11 @@ Route::post('/facility', [TourAPIController::class, 'addfacility']);
 
 
 Route::post('/studiopackage', [StudioAPIController::class, 'newpack']);
+
+
+Route::post('/faq', [FaqController::class, 'newfaq']);
+Route::post('/faq/{id}', [FaqController::class, 'updfaq']);
+Route::delete('/faq/{id}', [FaqController::class, 'deletefaq']);
 
 
 Route::post('/facilitystudio', [StudioAPIController::class, 'addfacility']);
