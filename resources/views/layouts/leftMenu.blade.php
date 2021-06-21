@@ -68,6 +68,54 @@
                 </ul>
             </li>
             <li class="nav-item">
+                <a href="/galleryvideo" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Gallery Video
+                </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/galleryphotos" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Gallery Photo
+                </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/faqcontrol" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                   FAQ
+                </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/whyuscontrol" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                   Why Us?
+                </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/teamcontrol" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                   Our Team
+                </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/testimoni" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                   Testimoni
+                </p>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="/logout" class="nav-link">
                 <i class="nav-icon fas fa-th"></i>
                 <p>

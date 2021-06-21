@@ -18,7 +18,7 @@
     </div>
     <div class="content">
         <div class="container-fluid">
-            <a href="/addnewtour" class="btn btn-primary"><i class="fas fa-plus"></i>  Tambah Studio Baru</a>
+            <a href="/addnewstudio" class="btn btn-primary"><i class="fas fa-plus"></i>  Tambah Studio Baru</a>
             <hr>
             <div class="d-flex justify-content-center">
                 {!! $datarows->links() !!}
@@ -33,7 +33,7 @@
                         <a href="{{'editpack/'.$item->id}}">
                         <div class="card-body">
                             <img src="{{asset('storage/images/370x300/'.$item->file_nm)}}"class="figure-img img-fluid rounded"/>
-                            <strong ><i class="fas fa-map-marker-alt mr-1"></i>{{$item->city}}</strong>
+                            <strong ><i class="fas fa-map-marker-alt mr-1"></i>{{$item->type}}</strong>
                             <br>
                             <strong ><i class="fas fa-tags mr-1"></i> Rp.{{number_format($item->price)}}</strong>
                             <hr>

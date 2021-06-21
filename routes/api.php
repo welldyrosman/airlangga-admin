@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\StudioAPIController;
+use App\Http\Controllers\StudioController;
 use App\Http\Controllers\TourAPIController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,3 +28,10 @@ Route::delete('/package/{id}', [TourAPIController::class, 'delpack']);
 Route::post('/dispackage/{id}', [TourAPIController::class, 'disabledpack']);
 
 Route::post('/facility', [TourAPIController::class, 'addfacility']);
+
+
+Route::post('/studiopackage', [StudioAPIController::class, 'newpack']);
+
+
+Route::post('/facilitystudio', [StudioAPIController::class, 'addfacility']);
+
