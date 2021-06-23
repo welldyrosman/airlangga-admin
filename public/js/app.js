@@ -1904,6 +1904,8 @@ __webpack_require__(/*! ./studioEvent */ "./resources/js/studioEvent.js");
 
 __webpack_require__(/*! ./faqEvent */ "./resources/js/faqEvent.js");
 
+__webpack_require__(/*! ./galvidEvent */ "./resources/js/galvidEvent.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -1997,6 +1999,72 @@ $(function () {
     $('#idfaq').val(obj.id);
     $('#seq').val(obj.seq);
     $('#modalfaq').modal('show');
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/galvidEvent.js":
+/*!*************************************!*\
+  !*** ./resources/js/galvidEvent.js ***!
+  \*************************************/
+/***/ (() => {
+
+$(function () {
+  $('#btnsavevid').click(function (e) {
+    debugger;
+    var id = $('#idvid').val();
+    var method = this.value == "new" ? "/api/galvid" : "/api/galvid/" + id;
+    callService(method, new FormData($('#formvid')[0]), "POST").then(function (ret) {
+      Swal.fire({
+        icon: 'success',
+        title: 'Video Berhasil di perbarui',
+        showConfirmButton: false,
+        timer: 1500
+      }).then(function (result) {
+        location.reload();
+      });
+    });
+  });
+  $("#addvid").click(function (e) {
+    $('#btnsavevid').val("new");
+  });
+  $(".btndelvid").click(function (e) {
+    var _this = this;
+
+    Swal.fire({
+      title: 'Hapus Video ini?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Iye ,Hapus Aja!'
+    }).then(function (result) {
+      if (result.isConfirmed) {
+        var id = _this.id.split("_")[1];
+
+        callService('/api/galvid/' + id, null, "DELETE").then(function (ret) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Video Berhasil di hapus',
+            showConfirmButton: false,
+            timer: 1500
+          }).then(function (result) {
+            location.reload();
+          });
+        });
+      }
+    });
+  });
+  $(".btneditvid").click(function (e) {
+    var obj = JSON.parse($(this).attr('data'));
+    $('#btnsavevid').val("edit");
+    $('#idvid').val(obj.id);
+    $('#vidname').val(obj.video_nm);
+    $('#url').val(obj.video_url);
+    $('#viddesk').val(obj.video_desc);
+    $('#seq').val(obj.seq);
+    $('#modalgalvid').modal('show');
   });
 });
 

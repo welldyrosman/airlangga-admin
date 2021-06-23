@@ -3,6 +3,7 @@ require('./Tools');
 require('./travelEvent');
 require('./studioEvent');
 require('./faqEvent');
+require('./galvidEvent');
 
 
 

@@ -34,7 +34,7 @@
                     <tbody>
                         @foreach ($faqs as $faq)
                         <tr>
-                            <td>No</td>
+                            <td>{{$loop->iteration}}</td>
                             <td>{{$faq->subject}}</td>
                             <td>{{$faq->deskripsi}}</td>
                             <td>{{$faq->seq}}</td>
