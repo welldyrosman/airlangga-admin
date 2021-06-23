@@ -35,16 +35,18 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($teams as $team)
                         <tr>
-                            <th>No</th>
-                            <th>View</th>
-                            <th>Nama Panggil</th>
-                            <th>Nama Lengkap</th>
-                            <th>Akun IG</th>
-                            <th>Jabatan</th>
-                            <th>Seq</th>
+                            <th>{{$loop->iteration}}</th>
+                            <th><img src="{{asset('storage/'.$team->photo_path.'/'.$img->photo)}}}}" width="50px" width="50px"></th>
+                            <th>{{$team->nickname}}</th>
+                            <th>{{$team->fullname}}</th>
+                            <th>{{$team->ig}}</th>
+                            <th>{{$team->position}}</th>
+                            <th>{{$team->seq}}</th>
                             <th>Desc</th>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
