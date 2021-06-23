@@ -110,13 +110,14 @@ $(function () {
             status:false
         }),p.startsWith("pack_time")&&listdate.push(obj[p]);
         var data=new FormData($('#formPack')[0]);
+        debugger
         data.append('listFac',JSON.stringify(listFac))
         listdate=[...new Set(listdate)];
         data.append('listDate',JSON.stringify(listdate))
         if(obj.isNew==0){
-           updservice(data,obj.travel_id);
+          // updservice(data,obj.travel_id);
         }else if(obj.isNew==1){
-           saveservice(data);
+          // saveservice(data);
         }
     })
     $('.btndelpack').click(function (e) {

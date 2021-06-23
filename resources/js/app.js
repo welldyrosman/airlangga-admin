@@ -4,6 +4,7 @@ require('./travelEvent');
 require('./studioEvent');
 require('./faqEvent');
 require('./galvidEvent');
+require('./teamEvent');
 
 
 

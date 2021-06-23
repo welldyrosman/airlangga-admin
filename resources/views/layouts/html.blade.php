@@ -20,9 +20,7 @@
 <body class="hold-transition light-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 
 <div id="app" class="wrapper">
-  <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__wobble" src="{{asset('assets/img/logo_w.png')}}" alt="AIRLAGGALOGO"  width="250">
-  </div>
+
   <!-- Navbar -->
   @include('layouts.topMenu')
   <!-- /.navbar -->
@@ -58,6 +56,8 @@
 <!-- jQuery -->
 
 <script src="{{asset('vendors/plugins/jquery/jquery.min.js')}}"></script>
+<script src="{{asset('vendors/plugins/jquery-validation/jquery.validate.min.js')}}"></script>
+<script src="{{asset('vendors/plugins/jquery-validation/additional-methods.min.js')}}"></script>
 
 <!-- Bootstrap 4 -->
 <!-- JavaScript Bundle with Popper -->

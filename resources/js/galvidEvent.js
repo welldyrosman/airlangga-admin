@@ -1,6 +1,6 @@
 $(function(){
     $('#btnsavevid').click(function (e) {
-        debugger
+
         var id=$('#idvid').val();
         var method=this.value=="new"?"/api/galvid":"/api/galvid/"+id
         callService(method,new FormData($('#formvid')[0]),"POST").then((ret)=>{

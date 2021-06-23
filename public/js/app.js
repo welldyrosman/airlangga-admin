@@ -1906,6 +1906,8 @@ __webpack_require__(/*! ./faqEvent */ "./resources/js/faqEvent.js");
 
 __webpack_require__(/*! ./galvidEvent */ "./resources/js/galvidEvent.js");
 
+__webpack_require__(/*! ./teamEvent */ "./resources/js/teamEvent.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -2012,7 +2014,6 @@ $(function () {
 
 $(function () {
   $('#btnsavevid').click(function (e) {
-    debugger;
     var id = $('#idvid').val();
     var method = this.value == "new" ? "/api/galvid" : "/api/galvid/" + id;
     callService(method, new FormData($('#formvid')[0]), "POST").then(function (ret) {
@@ -2171,6 +2172,147 @@ $(function () {
 
 /***/ }),
 
+/***/ "./resources/js/teamEvent.js":
+/*!***********************************!*\
+  !*** ./resources/js/teamEvent.js ***!
+  \***********************************/
+/***/ (() => {
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+$(function () {
+  var _rules;
+
+  var form = $("#formtim");
+  form.validate({
+    rules: (_rules = {
+      fullnm: {
+        required: true
+      },
+      nicknm: {
+        required: true
+      },
+      akunig: {
+        required: true
+      },
+      jabatan: {
+        required: true
+      }
+    }, _defineProperty(_rules, "nicknm", {
+      required: true
+    }), _defineProperty(_rules, "timseq", {
+      required: true
+    }), _rules),
+    messages: {
+      fullnm: {
+        required: "Inpu Nama Panggilannya Yah"
+      },
+      nicknm: {
+        required: "Input Nama Lengkapnya Yah"
+      },
+      akunig: {
+        required: "IG nya ga boleh kosong broo"
+      },
+      jabatan: {
+        required: "Jabatan dia apa?"
+      },
+      timseq: {
+        required: "Input Urutannya dong"
+      }
+    },
+    errorElement: 'span',
+    errorPlacement: function errorPlacement(error, element) {
+      error.addClass('invalid-feedback');
+      element.closest('.form-group').append(error);
+    },
+    highlight: function highlight(element, errorClass, validClass) {
+      $(element).addClass('is-invalid');
+    },
+    unhighlight: function unhighlight(element, errorClass, validClass) {
+      $(element).removeClass('is-invalid');
+    }
+  });
+  $('#btnsavetim').click(function (e) {
+    if (form.valid() == true) {
+      var id = $('#idtim').val();
+      var method = this.value == "new" ? "/api/teams" : "/api/teams/" + id;
+      var data = new FormData($('#formtim')[0]);
+      callService(method, data, "POST").then(function (ret) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Team Berhasil di perbarui',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(function (result) {
+          location.reload();
+        });
+      })["catch"](function (err) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error'
+        });
+      });
+    }
+  });
+
+  var renderView = function renderView(target, scope) {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+      $(target).attr('src', e.target.result);
+    };
+
+    reader.readAsDataURL(scope.files[0]);
+  };
+
+  $('#imgtim').change(function () {
+    renderView('#view_img_tim', this);
+  });
+  $("#addtim").click(function (e) {
+    $('#btnsavetim').val("new");
+  });
+  $(".btndeltim").click(function (e) {
+    var _this = this;
+
+    Swal.fire({
+      title: 'Hapus dia dari Team?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Iye ,Hapus Aje!'
+    }).then(function (result) {
+      if (result.isConfirmed) {
+        var id = _this.id.split("_")[1];
+
+        callService('/api/galvid/' + id, null, "DELETE").then(function (ret) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Video Berhasil di hapus',
+            showConfirmButton: false,
+            timer: 1500
+          }).then(function (result) {
+            location.reload();
+          });
+        });
+      }
+    });
+  });
+  $(".btnedittim").click(function (e) {
+    var obj = JSON.parse($(this).attr('data'));
+    $('#btnsavetim').val("edit");
+    $('#idtim').val(obj.id);
+    $('#nicknm').val(obj.nickname);
+    $('#fullnm').val(obj.fullname);
+    $('#akunig').val(obj.ig);
+    $('#jabatan').val(obj.position);
+    $('#timseq').val(obj.seq);
+    $('#modaltim').modal('show');
+  });
+});
+
+/***/ }),
+
 /***/ "./resources/js/travelEvent.js":
 /*!*************************************!*\
   !*** ./resources/js/travelEvent.js ***!
@@ -2299,14 +2441,13 @@ $(function () {
     }
 
     var data = new FormData($('#formPack')[0]);
+    debugger;
     data.append('listFac', JSON.stringify(listFac));
     listdate = _toConsumableArray(new Set(listdate));
     data.append('listDate', JSON.stringify(listdate));
 
-    if (obj.isNew == 0) {
-      updservice(data, obj.travel_id);
-    } else if (obj.isNew == 1) {
-      saveservice(data);
+    if (obj.isNew == 0) {// updservice(data,obj.travel_id);
+    } else if (obj.isNew == 1) {// saveservice(data);
     }
   });
   $('.btndelpack').click(function (e) {
