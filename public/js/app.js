@@ -1908,6 +1908,8 @@ __webpack_require__(/*! ./galvidEvent */ "./resources/js/galvidEvent.js");
 
 __webpack_require__(/*! ./teamEvent */ "./resources/js/teamEvent.js");
 
+__webpack_require__(/*! ./testiEvent */ "./resources/js/testiEvent.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -2285,10 +2287,10 @@ $(function () {
       if (result.isConfirmed) {
         var id = _this.id.split("_")[1];
 
-        callService('/api/galvid/' + id, null, "DELETE").then(function (ret) {
+        callService('/api/teams/' + id, null, "DELETE").then(function (ret) {
           Swal.fire({
             icon: 'success',
-            title: 'Video Berhasil di hapus',
+            title: 'Team Berhasil di hapus',
             showConfirmButton: false,
             timer: 1500
           }).then(function (result) {
@@ -2300,7 +2302,9 @@ $(function () {
   });
   $(".btnedittim").click(function (e) {
     var obj = JSON.parse($(this).attr('data'));
+    var imgsrc = $(this).attr('img-src');
     $('#btnsavetim').val("edit");
+    $("#view_img_tim").attr("src", imgsrc);
     $('#idtim').val(obj.id);
     $('#nicknm').val(obj.nickname);
     $('#fullnm').val(obj.fullname);
@@ -2308,6 +2312,129 @@ $(function () {
     $('#jabatan').val(obj.position);
     $('#timseq').val(obj.seq);
     $('#modaltim').modal('show');
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/testiEvent.js":
+/*!************************************!*\
+  !*** ./resources/js/testiEvent.js ***!
+  \************************************/
+/***/ (() => {
+
+$(function () {
+  var form = $("#formtesti");
+  form.validate({
+    rules: {
+      fullnm: {
+        required: true
+      },
+      testimoni: {
+        required: true
+      },
+      testiseq: {
+        required: true
+      }
+    },
+    messages: {
+      fullnm: {
+        required: "Inpu Nama lengkapnya Yah"
+      },
+      testimoni: {
+        required: "Input Testimoninya apa?"
+      },
+      testiseq: {
+        required: "Input Urutannya dong"
+      }
+    },
+    errorElement: 'span',
+    errorPlacement: function errorPlacement(error, element) {
+      error.addClass('invalid-feedback');
+      element.closest('.form-group').append(error);
+    },
+    highlight: function highlight(element, errorClass, validClass) {
+      $(element).addClass('is-invalid');
+    },
+    unhighlight: function unhighlight(element, errorClass, validClass) {
+      $(element).removeClass('is-invalid');
+    }
+  });
+  $('#btnsavetesti').click(function (e) {
+    if (form.valid() == true) {
+      var id = $('#idtesti').val();
+      var method = this.value == "new" ? "/api/testi" : "/api/testi/" + id;
+      var data = new FormData($('#formtesti')[0]);
+      callService(method, data, "POST").then(function (ret) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Testimoni Berhasil di perbarui',
+          showConfirmButton: false,
+          testier: 1500
+        }).then(function (result) {
+          location.reload();
+        });
+      })["catch"](function (err) {
+        Swal.fire({
+          icon: 'error',
+          title: JSON.parse(err.responseText).message
+        });
+      });
+    }
+  });
+
+  var renderView = function renderView(target, scope) {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+      $(target).attr('src', e.target.result);
+    };
+
+    reader.readAsDataURL(scope.files[0]);
+  };
+
+  $('#imgtesti').change(function () {
+    renderView('#view_img_testi', this);
+  });
+  $("#addtesti").click(function (e) {
+    $('#btnsavetesti').val("new");
+  });
+  $(".btndeltesti").click(function (e) {
+    var _this = this;
+
+    Swal.fire({
+      title: 'Hapus Testimoni ini?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Iye ,Hapus Aje!'
+    }).then(function (result) {
+      if (result.isConfirmed) {
+        var id = _this.id.split("_")[1];
+
+        callService('/api/testi/' + id, null, "DELETE").then(function (ret) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Testimoni Berhasil di hapus',
+            showConfirmButton: false,
+            timer: 1500
+          }).then(function (result) {
+            location.reload();
+          });
+        });
+      }
+    });
+  });
+  $(".btnedittesti").click(function (e) {
+    var obj = JSON.parse($(this).attr('data'));
+    var imgsrc = $(this).attr('img-src');
+    $('#btnsavetesti').val("edit");
+    $("#view_img_testi").attr("src", imgsrc);
+    $('#idtesti').val(obj.id);
+    $('#testimoni').val(obj.testimoni);
+    $('#testiseq').val(obj.seq);
+    $('#modaltesti').modal('show');
   });
 });
 

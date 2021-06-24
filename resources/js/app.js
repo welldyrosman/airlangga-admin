@@ -5,6 +5,7 @@ require('./studioEvent');
 require('./faqEvent');
 require('./galvidEvent');
 require('./teamEvent');
+require('./testiEvent');
 
 
 

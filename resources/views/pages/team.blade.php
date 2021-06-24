@@ -21,7 +21,7 @@
             <button class="btn btn-primary" id="addtim" data-bs-toggle="modal" data-bs-target="#modaltim"><i class="fas fa-plus"></i> Tambah Team Baru</button>
             <hr>
             <div class="card card-body">
-                <table class="table table-striped table-hover table-bordered">
+                <table class="table table-striped table-hover table-bordered projects">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -31,20 +31,21 @@
                             <th>Akun IG</th>
                             <th>Jabatan</th>
                             <th>Seq</th>
-                            <th>Desc</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($teams as $team)
                         <tr>
                             <th>{{$loop->iteration}}</th>
-                            <th><img src="{{asset('storage/'.$team->photo_path.'/'.$img->photo)}}}}" width="50px" width="50px"></th>
+                            <th><img class="table-avatar" src="{{asset('storage/'.$team->photo_path.'/'.$team->photo)}}" ></th>
                             <th>{{$team->nickname}}</th>
                             <th>{{$team->fullname}}</th>
                             <th>{{$team->ig}}</th>
                             <th>{{$team->position}}</th>
                             <th>{{$team->seq}}</th>
-                            <th>Desc</th>
+                            <th><button type="button" data="{{json_encode($team)}}" img-src="{{asset('storage/'.$team->photo_path.'/'.$team->photo)}}" class="btn btn-info btnedittim" ><i class="fas fa-edit"></i></button>
+                                <button type="button" id="{{'timdel_'.$team->id}}" class="btn btn-danger btndeltim"><i class="fas fa-trash"></i></button></th>
                         </tr>
                         @endforeach
                     </tbody>

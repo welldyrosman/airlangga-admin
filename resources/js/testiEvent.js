@@ -1,21 +1,16 @@
 $(function(){
-    var form = $("#formtim");
+    var form = $("#formtesti");
     form.validate({
         rules:{
             fullnm:{required:true},
-            nicknm:{required:true},
-            akunig:{required:true},
-            jabatan:{required:true},
-            nicknm:{required:true},
-            timseq:{required:true},
+            testimoni:{required:true},
+            testiseq:{required:true},
 
         },
         messages: {
-            fullnm:{required: "Inpu Nama Panggilannya Yah",},
-            nicknm:{required: "Input Nama Lengkapnya Yah",},
-            akunig:{required: "IG nya ga boleh kosong broo",},
-            jabatan:{required: "Jabatan dia apa?",},
-            timseq:{required: "Input Urutannya dong",},
+            fullnm:{required: "Inpu Nama lengkapnya Yah",},
+            testimoni:{required: "Input Testimoninya apa?",},
+            testiseq:{required: "Input Urutannya dong",},
         },
         errorElement: 'span',
         errorPlacement: function (error, element) {
@@ -30,24 +25,24 @@ $(function(){
         },
     });
 
-    $('#btnsavetim').click(function (e) {
+    $('#btnsavetesti').click(function (e) {
         if(form.valid() == true){
-            var id=$('#idtim').val();
-            var method=this.value=="new"?"/api/teams":"/api/teams/"+id
-            var data=new FormData($('#formtim')[0]);
+            var id=$('#idtesti').val();
+            var method=this.value=="new"?"/api/testi":"/api/testi/"+id
+            var data=new FormData($('#formtesti')[0]);
             callService(method,data,"POST").then((ret)=>{
                 Swal.fire({
                     icon: 'success',
-                    title: 'Team Berhasil di perbarui',
+                    title: 'Testimoni Berhasil di perbarui',
                     showConfirmButton: false,
-                    timer: 1500
+                    testier: 1500
                 }).then((result) => {
                     location.reload();
                 })
             }).catch((err)=>{
                 Swal.fire({
                     icon: 'error',
-                    title: 'Error',
+                    title: JSON.parse(err.responseText).message,
                 })
             });
         }
@@ -59,15 +54,15 @@ $(function(){
         }
         reader.readAsDataURL(scope.files[0]);
     }
-    $('#imgtim').change(function(){
-        renderView('#view_img_tim',this);
+    $('#imgtesti').change(function(){
+        renderView('#view_img_testi',this);
     });
-    $("#addtim").click((e)=>{
-        $('#btnsavetim').val("new");
+    $("#addtesti").click((e)=>{
+        $('#btnsavetesti').val("new");
     });
-    $(".btndeltim").click(function(e){
+    $(".btndeltesti").click(function(e){
         Swal.fire({
-            title: 'Hapus dia dari Team?',
+            title: 'Hapus Testimoni ini?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -76,10 +71,10 @@ $(function(){
           }).then((result) => {
             if (result.isConfirmed) {
                 var id=this.id.split("_")[1];
-                callService('/api/teams/'+id,null,"DELETE").then((ret)=>{
+                callService('/api/testi/'+id,null,"DELETE").then((ret)=>{
                     Swal.fire({
                         icon: 'success',
-                        title: 'Team Berhasil di hapus',
+                        title: 'Testimoni Berhasil di hapus',
                         showConfirmButton: false,
                         timer: 1500
                     }).then((result) => {
@@ -89,18 +84,15 @@ $(function(){
             }
           })
     });
-    $(".btnedittim").click(function(e){
+    $(".btnedittesti").click(function(e){
         var obj=JSON.parse($(this).attr('data'))
         var imgsrc=$(this).attr('img-src');
-        $('#btnsavetim').val("edit");
-        $("#view_img_tim").attr("src",imgsrc);
-        $('#idtim').val(obj.id);
-        $('#nicknm').val(obj.nickname);
-        $('#fullnm').val(obj.fullname);
-        $('#akunig').val(obj.ig);
-        $('#jabatan').val(obj.position);
-        $('#timseq').val(obj.seq);
-        $('#modaltim').modal('show');
+        $('#btnsavetesti').val("edit");
+        $("#view_img_testi").attr("src",imgsrc);
+        $('#idtesti').val(obj.id);
+        $('#testimoni').val(obj.testimoni);
+        $('#testiseq').val(obj.seq);
+        $('#modaltesti').modal('show');
     });
 
 

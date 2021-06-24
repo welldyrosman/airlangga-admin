@@ -39,8 +39,8 @@
                             <td>{{$faq->deskripsi}}</td>
                             <td>{{$faq->seq}}</td>
                             <td>
-                                <button type="button" data="{{json_encode($faq)}}" class="btn btn-info btneditfaq" ><i class="fas fa-edit"></i></button>
-                                <button type="button" id="{{'btndel_'.$faq->id}}" class="btn btn-danger btndelfaq"><i class="fas fa-trash"></i></button>
+                                <button type="button" data="{{json_encode($faq)}}" class="btn btn-info btn-sm btneditfaq" ><i class="fas fa-edit"></i> Edit</button>
+                                <button type="button" id="{{'btndel_'.$faq->id}}" class="btn btn-danger btn-sm btndelfaq"><i class="fas fa-trash"></i> Delete</button>
                             </td>
                         </tr>
                         @endforeach
