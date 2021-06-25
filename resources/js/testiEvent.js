@@ -35,7 +35,7 @@ $(function(){
                     icon: 'success',
                     title: 'Testimoni Berhasil di perbarui',
                     showConfirmButton: false,
-                    testier: 1500
+                    timer: 1000
                 }).then((result) => {
                     location.reload();
                 })
@@ -59,6 +59,12 @@ $(function(){
     });
     $("#addtesti").click((e)=>{
         $('#btnsavetesti').val("new");
+        var img=$('#pathpic').attr('value')
+        $("#view_img_testi").attr("src",img);
+        $('#idtesti').val('');
+        $('#fullnm').val('');
+        $('#testimoni').val('');
+        $('#testiseq').val('');
     });
     $(".btndeltesti").click(function(e){
         Swal.fire({
@@ -76,7 +82,7 @@ $(function(){
                         icon: 'success',
                         title: 'Testimoni Berhasil di hapus',
                         showConfirmButton: false,
-                        timer: 1500
+                        timer: 1000
                     }).then((result) => {
                         location.reload();
                     });
@@ -90,6 +96,7 @@ $(function(){
         $('#btnsavetesti').val("edit");
         $("#view_img_testi").attr("src",imgsrc);
         $('#idtesti').val(obj.id);
+        $('#fullnm').val(obj.people_name);
         $('#testimoni').val(obj.testimoni);
         $('#testiseq').val(obj.seq);
         $('#modaltesti').modal('show');

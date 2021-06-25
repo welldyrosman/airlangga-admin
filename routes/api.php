@@ -50,7 +50,7 @@ Route::post('/teams/{id}', [TeamController::class, 'updteam']);
 Route::delete('/teams/{id}', [TeamController::class, 'deletetim']);
 
 Route::post('/testi', [TestimoniController::class, 'addnewtesti']);
-Route::post('/testi/{id}', [TestimoniController::class, 'addnewtesti']);
+Route::post('/testi/{id}', [TestimoniController::class, 'updtesti']);
 Route::delete('/testi/{id}', [TestimoniController::class, 'deletetesti']);
 
 Route::post('/facilitystudio', [StudioAPIController::class, 'addfacility']);

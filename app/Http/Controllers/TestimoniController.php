@@ -39,6 +39,56 @@ class TestimoniController extends Controller
             "STATUS" => "OK"
         ], Response::HTTP_OK);
     }
+    public function updtesti(Request $request,$id){
+        DB::beginTransaction();
+        try{
+            $request->validate([
+                'fullnm' => 'required',
+                'testimoni' => 'required',
+                'testiseq' => 'required',
+                ]
+            );
+            $f=$request->input('fullnm');
+            $t=$request->input('testimoni');
+            $s=$request->input('testiseq');
+            DB::table('testimoni')
+            ->where('id',$id)
+            ->update(array(
+                "people_name"=>$f,
+                "testimoni"=>$t,
+                "seq"=>$s,
+                "add_time"=>Carbon::now()
+            ));
+            if($request->hasFile('imgtim')){
+                $file= $request->file('imgtim');
+                $ext = $file->getClientOriginalExtension();
+                $fileName =  'Team_ava_'.$id.'_img.'.$ext;
+
+                $imagesz = getimagesize($file);
+                    if($file->getSize()>500000){
+                        throw new Exception("Ukuran Gambar Tidak Boleh Lebih dari 500Kb");
+                    }
+                    if($imagesz[0]*1>250 && $imagesz[1]*1>250){
+                        throw new Exception("Dimensi Gambar maximal 250 x 250 px");
+                    }
+                    if (Storage::disk('public')->exists($this->path."/".$fileName)) {
+                        Storage::disk('public')->delete($this->path."/".$fileName);
+                    }
+                    DB::table('testimoni')->where('id',$id)->update([
+                        "photo_path"=>$this->path,
+                        "photo"=>$fileName
+                    ]);
+                    $file->storeAs('public/'.$this->path, $fileName);
+            }
+            DB::commit();
+        }catch(Exception $e){
+            DB::rollBack();
+            throw new Exception("Failed To Update");
+        }
+        return Response()->json([
+            "STATUS" => "OK"
+        ], Response::HTTP_OK);
+    }
     public function addnewtesti(Request $request){
        // DB::beginTransaction();
         DB::connection('mysql')->beginTransaction();

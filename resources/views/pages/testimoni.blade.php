@@ -40,7 +40,7 @@
                             <th>{{$testi->people_name}}</th>
                             <th>{{$testi->testimoni}}</th>
                             <th>{{$testi->seq}}</th>
-                            <th><button type="button" data="{{json_encode($testi)}}" img-src="{{asset('storage/'.$testi->photo_path.'/'.$testi->photo)}}" class="btn btn-info btn-sm btnedittim" ><i class="fas fa-edit"></i> Edit</button>
+                            <th><button type="button" data="{{json_encode($testi)}}" img-src="{{asset('storage/'.$testi->photo_path.'/'.$testi->photo)}}" class="btn btn-info btn-sm btnedittesti" ><i class="fas fa-edit"></i> Edit</button>
                                 <button type="button" id="{{'testidel_'.$testi->id}}" class="btn btn-danger btn-sm btndeltesti"><i class="fas fa-trash"></i> Delete</button></th>
                         </tr>
                         @endforeach
@@ -59,6 +59,7 @@
         </div>
         <div class="modal-body">
             <div class="text-center">
+                <input type="hidden" id="pathpic" value="{{asset('vendors/dist/img/avatar5.png')}}"/>
                 <img width="100px" id="view_img_testi" height="100px" src="{{asset('vendors/dist/img/avatar5.png')}}" class="img-thumbnail" alt="...">
             </div>
             <form id="formtesti" name="formtesti" enctype="multipart/form-data" >
