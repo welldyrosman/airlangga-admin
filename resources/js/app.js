@@ -6,6 +6,7 @@ require('./faqEvent');
 require('./galvidEvent');
 require('./teamEvent');
 require('./testiEvent');
+require('./galpicEvent');
 
 
 

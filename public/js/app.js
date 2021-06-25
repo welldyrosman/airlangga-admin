@@ -1910,6 +1910,8 @@ __webpack_require__(/*! ./teamEvent */ "./resources/js/teamEvent.js");
 
 __webpack_require__(/*! ./testiEvent */ "./resources/js/testiEvent.js");
 
+__webpack_require__(/*! ./galpicEvent */ "./resources/js/galpicEvent.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -2003,6 +2005,130 @@ $(function () {
     $('#idfaq').val(obj.id);
     $('#seq').val(obj.seq);
     $('#modalfaq').modal('show');
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/galpicEvent.js":
+/*!*************************************!*\
+  !*** ./resources/js/galpicEvent.js ***!
+  \*************************************/
+/***/ (() => {
+
+$(function () {
+  var formpic = $("#formpic");
+  formpic.validate({
+    rules: {
+      photonm: {
+        required: true
+      },
+      picseq: {
+        required: true
+      }
+    },
+    messages: {
+      photonm: {
+        required: "Input Nama Photonya yah"
+      },
+      picseq: {
+        required: "Input Urutannya dong"
+      }
+    },
+    errorElement: 'span',
+    errorPlacement: function errorPlacement(error, element) {
+      error.addClass('invalid-feedback');
+      element.closest('.form-group').append(error);
+    },
+    highlight: function highlight(element, errorClass, validClass) {
+      $(element).addClass('is-invalid');
+    },
+    unhighlight: function unhighlight(element, errorClass, validClass) {
+      $(element).removeClass('is-invalid');
+    }
+  });
+  $('#btnsavepic').click(function (e) {
+    if (formpic.valid() == true) {
+      var id = $('#idpic').val();
+      var method = this.value == "new" ? "/api/galpic" : "/api/galpic/" + id;
+      var data = new FormData($('#formpic')[0]);
+      callService(method, data, "POST").then(function (ret) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Photo Berhasil di perbarui',
+          showConfirmButton: false,
+          timer: 1000
+        }).then(function (result) {
+          location.reload();
+        });
+      })["catch"](function (err) {
+        Swal.fire({
+          icon: 'error',
+          title: JSON.parse(err.responseText).message
+        });
+      });
+    }
+  });
+
+  var renderView = function renderView(target, scope) {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+      $(target).attr('src', e.target.result);
+    };
+
+    reader.readAsDataURL(scope.files[0]);
+  };
+
+  $('#imgpic').change(function () {
+    renderView('#view_img_pic', this);
+  });
+  $("#addpic").click(function (e) {
+    $('#btnsavepic').val("new");
+    var img = $('#pathpic').attr('value');
+    $("#view_img_pic").attr("src", img);
+    $('#idpic').val('');
+    $('#photonm').val('');
+    $('#photodesc').val('');
+    $('#picseq').val('');
+  });
+  $(".btndelpic").click(function (e) {
+    var _this = this;
+
+    Swal.fire({
+      title: 'Hapus Photo ini?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Iye ,Hapus Aje!'
+    }).then(function (result) {
+      if (result.isConfirmed) {
+        var id = _this.id.split("_")[1];
+
+        callService('/api/galpic/' + id, null, "DELETE").then(function (ret) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Photo Berhasil di hapus',
+            showConfirmButton: false,
+            timer: 1000
+          }).then(function (result) {
+            location.reload();
+          });
+        });
+      }
+    });
+  });
+  $(".btneditpic").click(function (e) {
+    var obj = JSON.parse($(this).attr('data'));
+    var imgsrc = $(this).attr('img-src');
+    $('#btnsavepic').val("edit");
+    $("#view_img_pic").attr("src", imgsrc);
+    $('#idpic').val(obj.id);
+    $('#photonm').val(obj.photo_name);
+    $('#photodesc').val(obj.photo_desc);
+    $('#picseq').val(obj.seq);
+    $('#modalpic').modal('show');
   });
 });
 
@@ -2185,8 +2311,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 $(function () {
   var _rules;
 
-  var form = $("#formtim");
-  form.validate({
+  var formtim = $("#formtim");
+  formtim.validate({
     rules: (_rules = {
       fullnm: {
         required: true
@@ -2235,7 +2361,7 @@ $(function () {
     }
   });
   $('#btnsavetim').click(function (e) {
-    if (form.valid() == true) {
+    if (formtim.valid() == true) {
       var id = $('#idtim').val();
       var method = this.value == "new" ? "/api/teams" : "/api/teams/" + id;
       var data = new FormData($('#formtim')[0]);
@@ -2269,6 +2395,13 @@ $(function () {
 
   $('#imgtim').change(function () {
     renderView('#view_img_tim', this);
+    var img = $('#pathtimpic').attr('value');
+    $("#view_img_tim").attr("src", img);
+    $('#nicknm').val('');
+    $('#fullnm').val('');
+    $('#akunig').val('');
+    $('#jabatan').val('');
+    $('#timseq').val('');
   });
   $("#addtim").click(function (e) {
     $('#btnsavetim').val("new");
@@ -2324,8 +2457,8 @@ $(function () {
 /***/ (() => {
 
 $(function () {
-  var form = $("#formtesti");
-  form.validate({
+  var formtesti = $("#formtesti");
+  formtesti.validate({
     rules: {
       fullnm: {
         required: true
@@ -2361,7 +2494,7 @@ $(function () {
     }
   });
   $('#btnsavetesti').click(function (e) {
-    if (form.valid() == true) {
+    if (formtesti.valid() == true) {
       var id = $('#idtesti').val();
       var method = this.value == "new" ? "/api/testi" : "/api/testi/" + id;
       var data = new FormData($('#formtesti')[0]);

@@ -1,6 +1,6 @@
 $(function(){
-    var form = $("#formtim");
-    form.validate({
+    var formtim = $("#formtim");
+    formtim.validate({
         rules:{
             fullnm:{required:true},
             nicknm:{required:true},
@@ -31,7 +31,7 @@ $(function(){
     });
 
     $('#btnsavetim').click(function (e) {
-        if(form.valid() == true){
+        if(formtim.valid() == true){
             var id=$('#idtim').val();
             var method=this.value=="new"?"/api/teams":"/api/teams/"+id
             var data=new FormData($('#formtim')[0]);
@@ -61,6 +61,13 @@ $(function(){
     }
     $('#imgtim').change(function(){
         renderView('#view_img_tim',this);
+        var img=$('#pathtimpic').attr('value')
+        $("#view_img_tim").attr("src",img);
+        $('#nicknm').val('');
+        $('#fullnm').val('');
+        $('#akunig').val('');
+        $('#jabatan').val('');
+        $('#timseq').val('');
     });
     $("#addtim").click((e)=>{
         $('#btnsavetim').val("new");
