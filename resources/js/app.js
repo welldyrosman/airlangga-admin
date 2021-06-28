@@ -7,6 +7,7 @@ require('./galvidEvent');
 require('./teamEvent');
 require('./testiEvent');
 require('./galpicEvent');
+require('./slideEvent');
 
 
 

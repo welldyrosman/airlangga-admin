@@ -11,7 +11,9 @@ use Illuminate\Support\Facades\Storage;
 
 class PicGalController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
+        $token = $request->session()->token();
+        $token = csrf_token();
         $photos=DB::table('gallery')->get();
         $data=array(
             'title'=>'Gallery Photos',
@@ -64,22 +66,23 @@ class PicGalController extends Controller
                 $fileName =  'Gallery_'.$id.'_img.'.$ext;
 
                 $imagesz = getimagesize($file);
-                    if($file->getSize()>500000){
-                        throw new Exception("Ukuran Gambar Tidak Boleh Lebih dari 500Kb");
-                    }
-                    if (Storage::disk('public')->exists($this->path."/".$fileName)) {
-                        Storage::disk('public')->delete($this->path."/".$fileName);
-                    }
-                    DB::table('gallery')->where('id',$id)->update([
-                        "photo_path"=>$this->path,
-                        "photo"=>$fileName
-                    ]);
-                    $file->storeAs('public/'.$this->path, $fileName);
+                if($file->getSize()>500000){
+                    throw new Exception("Ukuran Gambar Tidak Boleh Lebih dari 500Kb");
+                }
+                if (Storage::disk('public')->exists($this->path."/".$fileName)) {
+                    Storage::disk('public')->delete($this->path."/".$fileName);
+                }
+                DB::table('gallery')->where('id',$id)->update(array(
+                    "photo_path"=>$this->path,
+                    "photo"=>$fileName
+                ));
+                $file->storeAs('public/'.$this->path, $fileName);
+              //  throw new Exception("tets");
             }
             DB::commit();
         }catch(Exception $e){
             DB::rollBack();
-            throw new Exception("Failed To Update");
+            throw new Exception($e->getMessage());
         }
         return Response()->json([
             "STATUS" => "OK"
@@ -106,13 +109,12 @@ class PicGalController extends Controller
                     "add_time"=>Carbon::now()
                 )
             );
+           // throw new Exception( $file= $request->file('imgpic'));
             if($request->hasFile('imgpic')){
                 $file= $request->file('imgpic');
-                $imagesz = getimagesize($file);
                     if($file->getSize()>500000){
                         throw new Exception("Ukuran Gambar Tidak Boleh Lebih dari 500Kb");
                     }
-
                     $ext = $file->getClientOriginalExtension();
                     $fileName =  'Gallery_'.$id.'_img.'.$ext;
                     DB::table('gallery')->where('id',$id)->update([

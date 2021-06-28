@@ -6,6 +6,7 @@ use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\GalVidController;
 use App\Http\Controllers\PicGalController;
+use App\Http\Controllers\SlideController;
 use App\Http\Controllers\StudioController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TestimoniController;
@@ -45,3 +46,5 @@ Route::get('/testimoni', [TestimoniController::class, 'index']);
 Route::get('/whyuscontrol', [WhyUsController::class, 'index']);
 Route::get('/faqcontrol', [FaqController::class, 'index']);
 Route::get('/facility', [FacilityController::class, 'index']);
+
+Route::get('/slidecontrol', [SlideController::class, 'index']);

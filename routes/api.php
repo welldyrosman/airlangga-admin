@@ -3,6 +3,7 @@
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\GalVidController;
 use App\Http\Controllers\PicGalController;
+use App\Http\Controllers\SlideController;
 use App\Http\Controllers\StudioAPIController;
 use App\Http\Controllers\StudioController;
 use App\Http\Controllers\TeamController;
@@ -57,6 +58,11 @@ Route::delete('/testi/{id}', [TestimoniController::class, 'deletetesti']);
 Route::post('/galpic', [PicGalController::class, 'addnewpic']);
 Route::post('/galpic/{id}', [PicGalController::class, 'updpic']);
 Route::delete('/galpic/{id}', [PicGalController::class, 'deletepic']);
+
+Route::post('/slide', [SlideController::class, 'addnewslide']);
+Route::post('/slide/{id}', [SlideController::class, 'updslide']);
+Route::delete('/slide/{id}', [SlideController::class, 'deleteslide']);
+Route::post('/disabledslide/{id}', [SlideController::class, 'disabledslide']);
 
 Route::post('/facilitystudio', [StudioAPIController::class, 'addfacility']);
 

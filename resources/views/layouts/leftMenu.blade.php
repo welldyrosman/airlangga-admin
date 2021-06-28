@@ -68,6 +68,14 @@
                 </ul>
             </li>
             <li class="nav-item">
+                <a href="/slidecontrol" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                   Slide Setting
+                </p>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="/galleryvideo" class="nav-link">
                 <i class="nav-icon fas fa-th"></i>
                 <p>

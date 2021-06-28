@@ -1,9 +1,5 @@
 $(function () {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
+
     toolToObj=($form)=>{
         var unindexed_array = $form.serializeArray();
         var indexed_array = {};
@@ -21,6 +17,11 @@ $(function () {
         return form;
     }
     callService =  (url,data,method)=>{
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
         return new Promise((resolve, reject) => {
             $.ajax({
                 data:data,

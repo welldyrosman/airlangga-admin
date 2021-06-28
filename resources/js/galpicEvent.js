@@ -24,11 +24,14 @@ $(function(){
     });
 
     $('#btnsavepic').click(function (e) {
-
         if(formpic.valid() == true){
             var id=$('#idpic').val();
             var method=this.value=="new"?"/api/galpic":"/api/galpic/"+id
             var data=new FormData($('#formpic')[0]);
+
+            for (var value of data.values()) {
+                console.log(value);
+             }
             callService(method,data,"POST").then((ret)=>{
                 Swal.fire({
                     icon: 'success',
@@ -96,7 +99,7 @@ $(function(){
         $('#btnsavepic').val("edit");
         $("#view_img_pic").attr("src",imgsrc);
         $('#idpic').val(obj.id);
-        $('#photonm').val(obj.photo_name);
+        $('#photonm').val(obj.photo_nm);
         $('#photodesc').val(obj.photo_desc);
         $('#picseq').val(obj.seq);
         $('#modalpic').modal('show');

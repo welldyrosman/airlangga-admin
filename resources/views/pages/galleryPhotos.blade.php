@@ -18,7 +18,7 @@
     </div>
     <div class="content">
         <div class="container-fluid">
-            <button class="btn btn-primary" id="addpic" data-bs-toggle="modal" data-bs-target="#modalpic"><i class="fas fa-plus"></i> Tambah picmoni</button>
+            <button class="btn btn-primary" id="addpic" data-bs-toggle="modal" data-bs-target="#modalpic"><i class="fas fa-plus"></i> Tambah Photo</button>
             <hr>
             <div class="card card-body">
                 <table class="table table-striped table-hover table-bordered projects">
@@ -65,6 +65,7 @@
                 <img width="100px" id="view_img_pic" height="100px" src="{{asset('vendors/dist/img/avatar5.png')}}" class="img-thumbnail" alt="...">
             </div>
             <form id="formpic" name="formpic" enctype="multipart/form-data" >
+                @csrf
                 <div class="form-group">
                     <label>Nama Foto</label>
                     <input type="hidden" id="idpic" name="idpic">

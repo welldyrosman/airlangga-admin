@@ -1841,12 +1841,6 @@ module.exports = {
 /***/ (() => {
 
 $(function () {
-  $.ajaxSetup({
-    headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-  });
-
   toolToObj = function toolToObj($form) {
     var unindexed_array = $form.serializeArray();
     var indexed_array = {};
@@ -1867,6 +1861,11 @@ $(function () {
   };
 
   callService = function callService(url, data, method) {
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
     return new Promise(function (resolve, reject) {
       $.ajax({
         data: data,
@@ -1911,6 +1910,8 @@ __webpack_require__(/*! ./teamEvent */ "./resources/js/teamEvent.js");
 __webpack_require__(/*! ./testiEvent */ "./resources/js/testiEvent.js");
 
 __webpack_require__(/*! ./galpicEvent */ "./resources/js/galpicEvent.js");
+
+__webpack_require__(/*! ./slideEvent */ "./resources/js/slideEvent.js");
 
 /***/ }),
 
@@ -2016,6 +2017,12 @@ $(function () {
   \*************************************/
 /***/ (() => {
 
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 $(function () {
   var formpic = $("#formpic");
   formpic.validate({
@@ -2052,6 +2059,21 @@ $(function () {
       var id = $('#idpic').val();
       var method = this.value == "new" ? "/api/galpic" : "/api/galpic/" + id;
       var data = new FormData($('#formpic')[0]);
+
+      var _iterator = _createForOfIteratorHelper(data.values()),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var value = _step.value;
+          console.log(value);
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+
       callService(method, data, "POST").then(function (ret) {
         Swal.fire({
           icon: 'success',
@@ -2125,7 +2147,7 @@ $(function () {
     $('#btnsavepic').val("edit");
     $("#view_img_pic").attr("src", imgsrc);
     $('#idpic').val(obj.id);
-    $('#photonm').val(obj.photo_name);
+    $('#photonm').val(obj.photo_nm);
     $('#photodesc').val(obj.photo_desc);
     $('#picseq').val(obj.seq);
     $('#modalpic').modal('show');
@@ -2194,6 +2216,178 @@ $(function () {
     $('#viddesk').val(obj.video_desc);
     $('#seq').val(obj.seq);
     $('#modalgalvid').modal('show');
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/slideEvent.js":
+/*!************************************!*\
+  !*** ./resources/js/slideEvent.js ***!
+  \************************************/
+/***/ (() => {
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+$(function () {
+  var formslide = $("#formslide");
+  formslide.validate({
+    rules: {
+      slidenm: {
+        required: true
+      },
+      slideseq: {
+        required: true
+      }
+    },
+    messages: {
+      slidenm: {
+        required: "Input Caption Photonya yah"
+      },
+      slideseq: {
+        required: "Input Urutannya dong"
+      }
+    },
+    errorElement: 'span',
+    errorPlacement: function errorPlacement(error, element) {
+      error.addClass('invalid-feedback');
+      element.closest('.form-group').append(error);
+    },
+    highlight: function highlight(element, errorClass, validClass) {
+      $(element).addClass('is-invalid');
+    },
+    unhighlight: function unhighlight(element, errorClass, validClass) {
+      $(element).removeClass('is-invalid');
+    }
+  });
+  $('#btnsaveslide').click(function (e) {
+    if (formslide.valid() == true) {
+      var id = $('#idslide').val();
+      var method = this.value == "new" ? "/api/slide" : "/api/slide/" + id;
+      var data = new FormData($('#formslide')[0]);
+
+      var _iterator = _createForOfIteratorHelper(data.values()),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var value = _step.value;
+          console.log(value);
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+
+      callService(method, data, "POST").then(function (ret) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Slide Berhasil di perbarui',
+          showConfirmButton: false,
+          timer: 1000
+        }).then(function (result) {
+          location.reload();
+        });
+      })["catch"](function (err) {
+        Swal.fire({
+          icon: 'error',
+          title: JSON.parse(err.responseText).message
+        });
+      });
+    }
+  });
+
+  var renderView = function renderView(target, scope) {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+      $(target).attr('src', e.target.result);
+    };
+
+    reader.readAsDataURL(scope.files[0]);
+  };
+
+  $('#imgslide').change(function () {
+    renderView('#view_img_slide', this);
+  });
+  $("#addslide").click(function (e) {
+    $('#btnsaveslide').val("new");
+    var img = $('#pathslide').attr('value');
+    $("#view_img_slide").attr("src", img);
+    $('#idslide').val('');
+    $('#slidenm').val('');
+    $('#slidedesc').val('');
+    $('#slideseq').val('');
+  });
+  $(".btnbanslide").click(function (e) {
+    var _this = this;
+
+    Swal.fire({
+      title: 'Ubah Slide ini?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Iye ,Ubah Aje!'
+    }).then(function (result) {
+      if (result.isConfirmed) {
+        var id = _this.id.split("_")[1];
+
+        callService('/api/disabledslide/' + id, null, "POST").then(function (ret) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Slide Berhasil di Ubah',
+            showConfirmButton: false,
+            timer: 1000
+          }).then(function (result) {
+            location.reload();
+          });
+        });
+      }
+    });
+  });
+  $(".btndelslide").click(function (e) {
+    var _this2 = this;
+
+    Swal.fire({
+      title: 'Hapus Slide ini?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Iye ,Hapus Aje!'
+    }).then(function (result) {
+      if (result.isConfirmed) {
+        var id = _this2.id.split("_")[1];
+
+        callService('/api/slide/' + id, null, "DELETE").then(function (ret) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Slide Berhasil di hapus',
+            showConfirmButton: false,
+            timer: 1000
+          }).then(function (result) {
+            location.reload();
+          });
+        });
+      }
+    });
+  });
+  $(".btneditslide").click(function (e) {
+    var obj = JSON.parse($(this).attr('data'));
+    var imgsrc = $(this).attr('img-src');
+    $('#btnsaveslide').val("edit");
+    $("#view_img_slide").attr("src", imgsrc);
+    $('#idslide').val(obj.id);
+    $('#slidenm').val(obj.slide_nm);
+    $('#slidedesc').val(obj.slide_desc);
+    $('#slideseq').val(obj.seq);
+    $('#modalslide').modal('show');
   });
 });
 
