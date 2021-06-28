@@ -117,7 +117,10 @@
                         <div class="row">
                             <div class="col"></div>
                             <div class="col-md-2">
-                                <button id="saveBtn" type="button" class="btn btn-primary"><i class="fas fa-save"></i> Simpan Data</button>
+                                <a href="/managetour" class="btn btn-app bg-dark"><i class="fas fa-arrow-left"></i> Kembali</a>
+                            </div>
+                            <div class="col-md-2">
+                                <button id="saveBtn" type="button" class="btn btn-app bg-primary"><i class="fas fa-save"></i> Simpan Data</button>
                             </div>
                         </div>
                     </div>

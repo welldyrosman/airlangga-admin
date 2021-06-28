@@ -95,6 +95,9 @@
                         <div class="row">
                             <div class="col"></div>
                             <div class="col-md-2">
+                                <a href="/managestudio" class="btn btn-app bg-dark"><i class="fas fa-arrow-left"></i> Kembali</a>
+                            </div>
+                            <div class="col-md-2">
                                 <button id="saveStuBtn" type="button" class="btn btn-primary"><i class="fas fa-save"></i> Simpan Data</button>
                             </div>
                         </div>
