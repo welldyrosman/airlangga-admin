@@ -2591,14 +2591,14 @@ $(function () {
     renderView('#view_img_tim', this);
     var img = $('#pathtimpic').attr('value');
     $("#view_img_tim").attr("src", img);
+  });
+  $("#addtim").click(function (e) {
+    $('#btnsavetim').val("new");
     $('#nicknm').val('');
     $('#fullnm').val('');
     $('#akunig').val('');
     $('#jabatan').val('');
     $('#timseq').val('');
-  });
-  $("#addtim").click(function (e) {
-    $('#btnsavetim').val("new");
   });
   $(".btndeltim").click(function (e) {
     var _this = this;
