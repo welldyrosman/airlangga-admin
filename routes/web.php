@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\GalVidController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PicGalController;
 use App\Http\Controllers\SlideController;
 use App\Http\Controllers\StudioController;
@@ -25,10 +26,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/home',[AuthController::class, 'home']);
-Route::post('/loginservice',[AuthController::class, 'loginservice']);
-Route::get('/', [AuthController::class, 'login']);
-Route::get('/logout', [AuthController::class, 'logout']);
+
+Route::group(['middleware' => 'web'], function () {
+    Route::get('/', [AuthController::class, 'showFormLogin'])->name('login');
+    Route::get('login', [AuthController::class, 'showFormLogin'])->name('login');
+    Route::post('loginservice',[AuthController::class, 'login2']);
+    Route::get('register', [AuthController::class, 'showFormRegister'])->name('register');
+    Route::post('register', [AuthController::class, 'register']);
+});
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('home',[AuthController::class, 'home'])->name('home');;
+    Route::get('logout', [AuthController::class, 'logout2'])->name('logout');
+});
 // Route::get('/managetour', function () {
 //     return view('pages/tourManage');
 // });
@@ -46,5 +55,7 @@ Route::get('/testimoni', [TestimoniController::class, 'index']);
 Route::get('/whyuscontrol', [WhyUsController::class, 'index']);
 Route::get('/faqcontrol', [FaqController::class, 'index']);
 Route::get('/facility', [FacilityController::class, 'index']);
+Route::get('/dashboard', [HomeController ::class, 'index']);
+
 
 Route::get('/slidecontrol', [SlideController::class, 'index']);
