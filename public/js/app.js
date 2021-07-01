@@ -1913,6 +1913,8 @@ __webpack_require__(/*! ./galpicEvent */ "./resources/js/galpicEvent.js");
 
 __webpack_require__(/*! ./slideEvent */ "./resources/js/slideEvent.js");
 
+__webpack_require__(/*! ./travelbookEvent */ "./resources/js/travelbookEvent.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -2971,6 +2973,51 @@ $(function () {
             icon: 'error',
             title: JSON.parse(err.responseText).message
           });
+        });
+      }
+    });
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/travelbookEvent.js":
+/*!*****************************************!*\
+  !*** ./resources/js/travelbookEvent.js ***!
+  \*****************************************/
+/***/ (() => {
+
+$(function () {
+  $('.btnpaytravel').click(function (e) {
+    Swal.fire({
+      title: 'Masukan DP yang di terima',
+      input: 'email',
+      inputAttributes: {
+        autocapitalize: 'off',
+        width: '100%'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Submit DP',
+      showLoaderOnConfirm: true,
+      preConfirm: function preConfirm(login) {
+        return fetch("//api.github.com/users/".concat(login)).then(function (response) {
+          if (!response.ok) {
+            throw new Error(response.statusText);
+          }
+
+          return response.json();
+        })["catch"](function (error) {
+          Swal.showValidationMessage("Request failed: ".concat(error));
+        });
+      },
+      allowOutsideClick: function allowOutsideClick() {
+        return !Swal.isLoading();
+      }
+    }).then(function (result) {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "".concat(result.value.login, "'s avatar"),
+          imageUrl: result.value.avatar_url
         });
       }
     });

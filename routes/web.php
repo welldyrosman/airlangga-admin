@@ -41,9 +41,11 @@ Route::group(['middleware' => 'auth'], function () {
 // Route::get('/managetour', function () {
 //     return view('pages/tourManage');
 // });
-Route::get('/managetour', [TourController::class, 'index']);
+Route::get('managetour', [TourController::class, 'index'])->name('managetour');
 Route::get('/addnewtour', [TourController::class, 'addnewtour']);
 Route::get('/editpack/{id}',[TourController::class,'editTour']);
+
+Route::get('/newtravel', [TourController::class, 'newtravel']);
 
 Route::get('/managestudio', [StudioController::class, 'index']);
 Route::get('/addnewstudio', [StudioController::class, 'addnewstudio']);

@@ -9,15 +9,7 @@ use stdClass;
 class TourController extends Controller
 {
     //tambah code ini di setiap controller view
-    public function __construct()
-    {
-        $this->middleware(function ($request, $next) {
-            if(!session()->has('admin')) {
-                return redirect('/');
-            }
-            return $next($request);
-        });
-    }
+
     //end
 
     public function index(Request $request){
@@ -41,7 +33,19 @@ class TourController extends Controller
         );
         return view('pages/tourManage',$data);
     }
+    public function newtravel(){
+        $books=DB::table('travel_book as b')
+        ->leftJoin('users as u',function($join){
+            $join->on('b.member_id','=','u.google_id');
+        })
+        ->where('b.pay_status','booked')->get();
+        $data=array(
+            'title'=>'New Booking Travel',
+            'books'=>$books
+        );
 
+        return view('pages/newBookTravel',$data);
+    }
     public function addnewtour(){
         $dataFacility= DB::table('facility')->where('fac_kind','Tour')
         ->get();

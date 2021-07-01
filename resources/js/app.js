@@ -8,7 +8,7 @@ require('./teamEvent');
 require('./testiEvent');
 require('./galpicEvent');
 require('./slideEvent');
-
+require('./travelbookEvent');
 
 
 
