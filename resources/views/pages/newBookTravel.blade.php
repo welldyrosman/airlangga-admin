@@ -19,40 +19,48 @@
     <div class="content">
         <div class="container-fluid">
             <div class="card card-body table-responsive">
-                <table class="table table-hover table-bordered">
+                <table class="table table-hover table-bordered"
+                id="table"
+                data-toggle="table"
+                data-height="460"
+                data-search="true"
+                data-show-refresh="true"
+                data-method="get"
+                data-pagination="true"
+                data-side-pagination="server"
+                data-url="/getbookstravel">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Booking No</th>
-                            <th>Nama Pemesan</th>
-                            <th>No Telp</th>
-                            <th>email</th>
-                            <th>Pack Qty</th>
-                            <th>Total</th>
-                            <th>Aksi</th>
+                            <th data-field="book_no">Booking No</th>
+                            <th data-field="name">Nama Pemesan</th>
+                            <th data-field="phone_no">No Telp</th>
+                            <th data-field="email">email</th>
+                            <th data-field="pack_nm">Nama Paket</th>
+                            <th data-field="book_time">Tgl Book</th>
+                            <th data-field="pack_date">Tgl Berangkat</th>
+                            <th data-field="pack_qty">Pack Qty</th>
+                            <th data-field="price">Total</th>
+                            <th data-formatter="operateFormatter" >Aksi</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach ($books as $book)
-                        <tr>
-                            <td>{{$loop->iteration}}</td>
-                            <td>{{$book->book_no}}</td>
-                            <td>{{$book->name}}</td>
-                            <td>{{$book->phone_no}}</td>
-                            <td>{{$book->email}}</td>
-                            <td>{{$book->pack_qty}}</td>
-                            <td>{{'Rp. '.number_format($book->pack_qty*$book->price)}}</td>
-                            <td>
-                                <button type="button" data="{{json_encode($book)}}" class="btn btn-info btn-sm btnpaytravel" ><i class="fas fa-cash-register"></i> Bayar</button>
-                               {{--  <button type="button" id="{{'btndel_'.$faq->id}}" class="btn btn-danger btn-sm btndelfaq"><i class="fas fa-trash"></i> Delete</button> --}}
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
+
                 </table>
             </div>
         </div>
     </div>
 </div>
+<script>
+    function operateFormatter(value, row, index) {
+        return [
+          '<a class="like" href="javascript:void(0)" title="Like">',
+          '<i class="fa fa-heart"></i>',
+          '</a>  ',
+          '<a class="remove" href="javascript:void(0)" title="Remove">',
+          '<i class="fa fa-trash"></i>',
+          '</a>'
+        ].join('')
+      }
+</script>
 
 @endsection

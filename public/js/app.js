@@ -2988,37 +2988,60 @@ $(function () {
 /***/ (() => {
 
 $(function () {
+  function submitdp(data, id) {
+    callService('/api/submitdp/' + id, data, "POST").then(function (ret) {
+      Swal.fire('Sukses', 'Pembarayan Berhasil Di Update', 'success');
+      location.reload();
+    });
+  }
+
   $('.btnpaytravel').click(function (e) {
+    var _this = this;
+
+    var data = JSON.parse($(this).attr('data'));
+    var dp = data.price * data.pack_qty * 0.3;
     Swal.fire({
-      title: 'Masukan DP yang di terima',
-      input: 'email',
-      inputAttributes: {
-        autocapitalize: 'off',
-        width: '100%'
-      },
+      title: 'Masukan DP yang di terima untuk Booking No :<br>' + data.book_no + '<br><small>Minimal DP : ' + dp + '</small>',
+      inputLabel: 'DP minimal',
+      html: '<input id="swal-input1" type="number" value="' + dp + '" class="swal2-input">' + '<input type="hidden" value="' + dp + '" id="dpmin">',
       showCancelButton: true,
       confirmButtonText: 'Submit DP',
       showLoaderOnConfirm: true,
       preConfirm: function preConfirm(login) {
-        return fetch("//api.github.com/users/".concat(login)).then(function (response) {
-          if (!response.ok) {
-            throw new Error(response.statusText);
-          }
+        var dp = document.getElementById('swal-input1').value;
+        var dpmin = document.getElementById('dpmin').value;
 
-          return response.json();
-        })["catch"](function (error) {
-          Swal.showValidationMessage("Request failed: ".concat(error));
-        });
+        if (dp < dpmin) {
+          _this.dp = dp;
+          Swal.fire({
+            title: 'DP Kurang Dari yang ditentukan',
+            text: "Kamu Yakin untuk Confirm Pembayaran ini?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Confirm'
+          }).then(function (result) {
+            if (result.isConfirmed) {
+              var id = _this.id.split("_")[1];
+
+              var data = new FormData();
+              data.append('dp', _this.dp);
+              submitdp(data, id);
+            }
+          });
+        }
       },
       allowOutsideClick: function allowOutsideClick() {
         return !Swal.isLoading();
       }
     }).then(function (result) {
       if (result.isConfirmed) {
-        Swal.fire({
-          title: "".concat(result.value.login, "'s avatar"),
-          imageUrl: result.value.avatar_url
-        });
+        var id = _this.id.split("_")[1];
+
+        var data = new FormData();
+        data.append('dp', _this.dp);
+        submitdp(data, id);
       }
     });
   });

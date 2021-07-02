@@ -33,12 +33,26 @@ class TourController extends Controller
         );
         return view('pages/tourManage',$data);
     }
+    public function getbookstravel(){
+        $books=DB::table('travel_book as b')
+        ->leftJoin('users as u',function($join){
+            $join->on('b.member_id','=','u.google_id');
+        })
+        ->leftJoin('travel_pack as p','b.pack_id','=','p.id')
+        ->where('b.pay_status','booked')
+        ->select('b.*','u.name','u.email','u.phone_no','p.pack_nm','p.city')
+        ->get();
+        return response()->json($books);
+    }
     public function newtravel(){
         $books=DB::table('travel_book as b')
         ->leftJoin('users as u',function($join){
             $join->on('b.member_id','=','u.google_id');
         })
-        ->where('b.pay_status','booked')->get();
+        ->leftJoin('travel_pack as p','b.pack_id','=','p.id')
+        ->where('b.pay_status','booked')
+        ->select('b.*','u.name','u.email','u.phone_no','p.pack_nm','p.city')
+        ->get();
         $data=array(
             'title'=>'New Booking Travel',
             'books'=>$books

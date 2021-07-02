@@ -266,4 +266,20 @@ class TourAPIController extends Controller
         }
         return response()->json(['STATUS'=>'OK'],Response::HTTP_OK);
     }
+    public function submitdp(Request $request,$id){
+        $dp=$request->input('dp');
+        DB::beginTransaction();
+        try{
+            DB::table('travel_book')->where('id',$id)
+            ->update([
+                'dp_pay'=>$dp,
+                'dp_confirm_date'=>Carbon::now(),
+                'pay_status'=>'DP Confirm'
+            ]);
+            DB::commit();
+        }catch(Exception $e){
+            DB::rollBack();
+            throw new Exception("Pembayaran Gagal");
+        }
+    }
 }

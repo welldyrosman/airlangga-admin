@@ -32,6 +32,8 @@ Route::get('/package', [TourAPIController::class, 'getpack']);
 Route::post('/package/{id}', [TourAPIController::class, 'updpack']);
 Route::delete('/package/{id}', [TourAPIController::class, 'delpack']);
 Route::post('/dispackage/{id}', [TourAPIController::class, 'disabledpack']);
+Route::post('/submitdp/{id}', [TourAPIController::class, 'submitdp']);
+
 
 Route::post('/facility', [TourAPIController::class, 'addfacility']);
 
