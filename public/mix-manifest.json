@@ -1,5 +1,6 @@
 {
     "/js/app.js": "/js/app.js",
     "/js/app/template.js": "/js/app/template.js",
+    "/js/app/newbooktravelEvent.js": "/js/app/newbooktravelEvent.js",
     "/css/app.css": "/css/app.css"
 }

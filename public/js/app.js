@@ -1913,8 +1913,6 @@ __webpack_require__(/*! ./galpicEvent */ "./resources/js/galpicEvent.js");
 
 __webpack_require__(/*! ./slideEvent */ "./resources/js/slideEvent.js");
 
-__webpack_require__(/*! ./travelbookEvent */ "./resources/js/travelbookEvent.js");
-
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -2974,74 +2972,6 @@ $(function () {
             title: JSON.parse(err.responseText).message
           });
         });
-      }
-    });
-  });
-});
-
-/***/ }),
-
-/***/ "./resources/js/travelbookEvent.js":
-/*!*****************************************!*\
-  !*** ./resources/js/travelbookEvent.js ***!
-  \*****************************************/
-/***/ (() => {
-
-$(function () {
-  function submitdp(data, id) {
-    callService('/api/submitdp/' + id, data, "POST").then(function (ret) {
-      Swal.fire('Sukses', 'Pembarayan Berhasil Di Update', 'success');
-      location.reload();
-    });
-  }
-
-  $('.btnpaytravel').click(function (e) {
-    var _this = this;
-
-    var data = JSON.parse($(this).attr('data'));
-    var dp = data.price * data.pack_qty * 0.3;
-    Swal.fire({
-      title: 'Masukan DP yang di terima untuk Booking No :<br>' + data.book_no + '<br><small>Minimal DP : ' + dp + '</small>',
-      inputLabel: 'DP minimal',
-      html: '<input id="swal-input1" type="number" value="' + dp + '" class="swal2-input">' + '<input type="hidden" value="' + dp + '" id="dpmin">',
-      showCancelButton: true,
-      confirmButtonText: 'Submit DP',
-      showLoaderOnConfirm: true,
-      preConfirm: function preConfirm(login) {
-        var dp = document.getElementById('swal-input1').value;
-        var dpmin = document.getElementById('dpmin').value;
-
-        if (dp < dpmin) {
-          _this.dp = dp;
-          Swal.fire({
-            title: 'DP Kurang Dari yang ditentukan',
-            text: "Kamu Yakin untuk Confirm Pembayaran ini?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Confirm'
-          }).then(function (result) {
-            if (result.isConfirmed) {
-              var id = _this.id.split("_")[1];
-
-              var data = new FormData();
-              data.append('dp', _this.dp);
-              submitdp(data, id);
-            }
-          });
-        }
-      },
-      allowOutsideClick: function allowOutsideClick() {
-        return !Swal.isLoading();
-      }
-    }).then(function (result) {
-      if (result.isConfirmed) {
-        var id = _this.id.split("_")[1];
-
-        var data = new FormData();
-        data.append('dp', _this.dp);
-        submitdp(data, id);
       }
     });
   });

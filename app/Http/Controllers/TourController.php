@@ -44,6 +44,18 @@ class TourController extends Controller
         ->get();
         return response()->json($books);
     }
+    public function booktraveldet(Request $request,$id){
+        $packages=DB::table('travel_book as b')
+        ->join('travel_pack as p','b.pack_id','=','p.id')
+        ->join('users as u','u.google_id','=','b.member_id')
+        ->select('b.*','p.pack_nm','p.city','u.name','u.email','u.phone_no')
+        ->where('b.id',$id)->first();
+        $data=array(
+            'packages'=>$packages,
+        //    'datelist'=>$dalelist
+           );
+        return view('pages/booktraveldet',$data);
+    }
     public function newtravel(){
         $books=DB::table('travel_book as b')
         ->leftJoin('users as u',function($join){

@@ -43,6 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
 // });
 Route::get('managetour', [TourController::class, 'index'])->name('managetour');
 Route::get('/getbookstravel', [TourController::class, 'getbookstravel']);
+Route::get('detailbooktravel/{id}', [TourController::class, 'booktraveldet'])->name('detailbooktravel');
 
 Route::get('/addnewtour', [TourController::class, 'addnewtour']);
 Route::get('/editpack/{id}',[TourController::class,'editTour']);

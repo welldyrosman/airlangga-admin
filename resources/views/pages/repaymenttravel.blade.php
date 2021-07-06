@@ -10,7 +10,7 @@
                 <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
-                    <li class="breadcrumb-item active">New Booking Travel</li>
+                    <li class="breadcrumb-item active">Pelunasan Travel</li>
                 </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
