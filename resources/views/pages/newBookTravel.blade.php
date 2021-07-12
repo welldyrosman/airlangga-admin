@@ -43,7 +43,7 @@
                             <th data-field="pack_date">Tgl Berangkat</th>
                             <th data-field="pack_qty">Pack Qty</th>
                             <th data-field="price">Total</th>
-                            <th data-formatter="operateFormatter" data-events="operateEvents" >Aksi</th>
+                            <th data-formatter="operateFormatter" >Aksi</th>
                         </tr>
                     </thead>
 

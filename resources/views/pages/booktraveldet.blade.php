@@ -38,7 +38,9 @@
             </div>
             <!-- /.col -->
             <div class="col-sm-4 invoice-col">
-                <b>Booking No # {{$packages->book_no}}</b><br>
+                <input type="hidden" id="idpack" value="{{$packages->id}}"/>
+                <input type="hidden" id="totalamt" value="{{$packages->pack_qty*$packages->price}}"/>
+                <b >Booking No # <span class="bookno">{{$packages->book_no}}</span></b><br>
                 <b>Package Order:</b> [{{$packages->city}}]- {{$packages->pack_nm}}<br>
                 <b>Travel Date:</b> {{$packages->pack_date}}<br>
                 <b>Harga:  </b>IDR {{number_format($packages->price)}}<br>
@@ -80,7 +82,7 @@
             <!-- /.col -->
             <div class="col-6">
                 <p class="lead">Amount Due {{date('Y-m-d', strtotime('-2 days', strtotime($packages->pack_date)))}}</p>
-
+                <script src="{{ mix('js/app/actionNewbook.js') }}"></script>
                 <div class="table-responsive">
                 <table class="table">
                     <tr>
@@ -114,7 +116,7 @@
                 </button> --}}
                 <button class="btn btn-danger">Refund</button>
                 <button class="btn btn-success">Pelunasan</button>
-                <button class="btn btn-success">Bayar DP</button>
+                <button id="btnbyrdp" class="btn btn-success">Bayar DP</button>
                 <button class="btn btn-danger">Batalkan Trip</button>
                 <button class="btn btn-warning">Ubah Tanggal Trip</button>
                 <a href="{{'/bookpdf/'.$packages->id}}" target="_blank" type="button" class="btn btn-primary" style="margin-right: 5px;">
@@ -127,4 +129,5 @@
         </div><!-- /.col -->
     </div>
 </div>
+
 @endsection
