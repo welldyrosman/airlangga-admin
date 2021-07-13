@@ -282,4 +282,24 @@ class TourAPIController extends Controller
             throw new Exception("Pembayaran Gagal");
         }
     }
+    public function cancelbook(Request $request,$id){
+        $book=DB::table('travel_book')->where('id',$id)->first();
+        $reason=$request->input("reason");
+        DB::beginTransaction();
+        try{
+            if($book->pay_status=="Finish"){
+                throw new Exception("Tidak bisa Batalkan Pesanan ini");
+            }else{
+                DB::table('travel_book')->where('id',$id)
+                ->update([
+                    'pay_status'=>'Canceled',
+                    'cancel_mk'=>1,
+                    'cancel_desc'=>$reason,
+                    'cancel_time'=>Carbon::now(),
+                    'upd_time'=>Carbon::now()
+                ]);
+                DB::commit();
+            }
+        }
+    }
 }

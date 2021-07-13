@@ -2,6 +2,7 @@
 $(function () {
     dpPay=function(id,dp,bookno){
         this.selectedid=id;
+        this.dp=dp*0.3;
         Swal.fire({
             title: 'Masukan DP yang di terima untuk Booking No :<br>'+bookno+'<br><small>Minimal DP : '+dp+'</small>',
             inputLabel:'DP minimal',
@@ -52,13 +53,29 @@ $(function () {
                 'Pembarayan Berhasil Di Update',
                 'success'
             )
-            $("#tablenewbooktravel").bootstrapTable('refresh');
+            location.reload()
         })
     }
     $("#btnbyrdp").click(()=>{
-        dpPay($("#idpack").val(),)
-        alert($("#idpack").val())
-        alert($("#totalamt").val())
-        alert($(".bookno").html())
+        dpPay($("#idpack").val(),$("#totalamt").val(),$(".bookno").html())
+    })
+    $("#btnbtltrip").click(()=>{
+        Swal.fire({
+            title: 'Apakah Yakin Membatalkan Booking ini?',
+            text: "Pendapatan akan dikurangi dengan jumlah yang disetorkan[Refund]",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Iye , Batalin Aje!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire(
+                'Pembatalan',
+                'Berhasil Melakukan Pembatalan',
+                'success'
+              )
+            }
+          })
     })
 });

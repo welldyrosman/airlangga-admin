@@ -9,9 +9,10 @@
             <div class="row">
             <div class="col-12">
                 <h4>
-                <img height="100px" src="{{asset('assets/img/travel.png')}}"/> Airlangga Sejahtera Travel.
-                <small class="float-right">Book Date: {{$packages->book_time}}</small>
+                    <img height="100px" src="{{asset('assets/img/travel.png')}}"/> Airlangga Sejahtera Travel.
+                    <small class="float-right">Book Date: {{$packages->book_time}}</small>
                 </h4>
+                <h3 class="float-right text-primary">STATUS :[{{$packages->pay_status}}]</h3>
             </div>
             <!-- /.col -->
             </div>
@@ -78,6 +79,18 @@
             <div class="row">
             <!-- accepted payments column -->
             <div class="col-6">
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr>
+                        <th style="width:50%">DP Telah dibayar:</th>
+                        <td><small>IDR</small> {{number_format($packages->dp_pay)}}</td>
+                        </tr>
+                        <tr>
+                        <th>Sisa Pembayaran</th>
+                        <td><small>IDR</small> {{number_format(($packages->pack_qty*$packages->price)-$packages->dp_pay)}}</td>
+                        </tr>
+                    </table>
+                    </div>
             </div>
             <!-- /.col -->
             <div class="col-6">
@@ -116,8 +129,8 @@
                 </button> --}}
                 <button class="btn btn-danger">Refund</button>
                 <button class="btn btn-success">Pelunasan</button>
-                <button id="btnbyrdp" class="btn btn-success">Bayar DP</button>
-                <button class="btn btn-danger">Batalkan Trip</button>
+                <button id="btnbyrdp"  class="btn btn-success {{$packages->pay_status=="Booked"?'':'disabled'}}">Bayar DP</button>
+                <button id="btnbtltrip" class="btn btn-danger">Batalkan Trip</button>
                 <button class="btn btn-warning">Ubah Tanggal Trip</button>
                 <a href="{{'/bookpdf/'.$packages->id}}" target="_blank" type="button" class="btn btn-primary" style="margin-right: 5px;">
                 <i class="fas fa-download"></i> Generate PDF
