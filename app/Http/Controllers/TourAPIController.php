@@ -300,6 +300,9 @@ class TourAPIController extends Controller
                 ]);
                 DB::commit();
             }
+        }catch(Exception $e){
+            DB::rollBack();
+            throw new Exception($e);
         }
     }
 }

@@ -127,12 +127,21 @@
                 {{-- <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
                 Payment
                 </button> --}}
-                <button class="btn btn-danger">Refund</button>
-                <button class="btn btn-success">Pelunasan</button>
+                <button class="btn btn-success {{$packages->pay_status=="Canceled"?'disabled':''}}">Pelunasan</button>
                 <button id="btnbyrdp"  class="btn btn-success {{$packages->pay_status=="Booked"?'':'disabled'}}">Bayar DP</button>
-                <button id="btnbtltrip" class="btn btn-danger">Batalkan Trip</button>
-                <button class="btn btn-warning">Ubah Tanggal Trip</button>
-                <a href="{{'/bookpdf/'.$packages->id}}" target="_blank" type="button" class="btn btn-primary" style="margin-right: 5px;">
+                <button id="btnbtltrip" class="btn btn-danger {{$packages->pay_status=="Canceled"?'disabled':''}}">Batalkan Trip</button>
+                <div class="btn-group dropup">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        Ubah Tanggal Perjalanan
+                    </button>
+                    <ul class="dropdown-menu">
+                        @foreach ($datelist as $date)
+                            <button class="dropdown-item datelist" ><i class="fas fa-calendar"></i>  {{$date->travel_date}}</button>
+                        @endforeach
+                    </ul>
+                </div>
+                <button class="btn btn-warning {{$packages->pay_status=="Canceled"?'disabled':''}}">Ubah Tanggal Trip</button>
+                <a href="{{'/bookpdf/'.$packages->id}}" target="_blank" type="button" class="btn btn-primary {{$packages->pay_status=="Canceled"?'disabled':''}}" style="margin-right: 5px;">
                 <i class="fas fa-download"></i> Generate PDF
                 </a>
             </div>

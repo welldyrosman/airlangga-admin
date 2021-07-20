@@ -50,9 +50,10 @@ class TourController extends Controller
         ->join('users as u','u.google_id','=','b.member_id')
         ->select('b.*','p.pack_nm','p.city','u.name','u.email','u.phone_no')
         ->where('b.id',$id)->first();
+        $datelist=DB::table('travel_time')->where('travel_id',$packages->pack_id)->get();
         $data=array(
             'packages'=>$packages,
-        //    'datelist'=>$dalelist
+            'datelist'=>$datelist
            );
         return view('pages/booktraveldet',$data);
     }

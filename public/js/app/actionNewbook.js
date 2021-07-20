@@ -75,7 +75,31 @@ $(function () {
       confirmButtonText: 'Iye , Batalin Aje!'
     }).then(function (result) {
       if (result.isConfirmed) {
-        Swal.fire('Pembatalan', 'Berhasil Melakukan Pembatalan', 'success');
+        callService('/api/cancelbook/' + $("#idpack").val(), null, "POST").then(function (ret) {
+          Swal.fire('Pembatalan', 'Berhasil Melakukan Pembatalan', 'success');
+          location.href = '/newtravel';
+        });
+      }
+    });
+  });
+  $(".datelist").click(function () {
+    var val = this.innerText;
+    var id = $("#idpack").val();
+    Swal.fire({
+      title: 'Apakah Yakin Mengubah Tanggal Booking ini?',
+      text: "Perjalan di ubah ke tanggal  :" + val,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Iye , Ubah Tanggal!'
+    }).then(function (result) {
+      if (result.isConfirmed) {
+        var dat;
+        callService('/api/changebookdate/' + $("#idpack").val(), null, "POST").then(function (ret) {
+          Swal.fire('Pembatalan', 'Berhasil Melakukan Pembatalan', 'success');
+          location.reload();
+        });
       }
     });
   });

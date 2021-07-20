@@ -33,7 +33,7 @@ Route::post('/package/{id}', [TourAPIController::class, 'updpack']);
 Route::delete('/package/{id}', [TourAPIController::class, 'delpack']);
 Route::post('/dispackage/{id}', [TourAPIController::class, 'disabledpack']);
 Route::post('/submitdp/{id}', [TourAPIController::class, 'submitdp']);
-
+Route::post('/cancelbook/{id}', [TourAPIController::class, 'cancelbook']);
 
 Route::post('/facility', [TourAPIController::class, 'addfacility']);
 

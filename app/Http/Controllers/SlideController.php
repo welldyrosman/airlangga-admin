@@ -83,7 +83,7 @@ class SlideController extends Controller
                     if($file->getSize()>1000000){
                         throw new Exception("Ukuran Gambar Tidak Boleh Lebih dari 1Mb");
                     }
-                    if($imagesz[0]*1!=1121 && $imagesz[1]*1!=301){
+                    if($imagesz[0]*1!=1120 && $imagesz[1]*1!=300){
                         throw new Exception("Dimensi Gambar Harus 1120 x 300 px");
                     }
                     if (Storage::disk('public')->exists($this->path."/".$fileName)) {
@@ -131,8 +131,8 @@ class SlideController extends Controller
                     if($file->getSize()>1000000){
                         throw new Exception("Ukuran Gambar Tidak Boleh Lebih dari 1MB");
                     }
-                    if($imagesz[0]*1!=1121 && $imagesz[1]*1!=301){
-                        throw new Exception("Dimensi Gambar Harus 1120 x 300 px");
+                    if($imagesz[0]*1!=1120 && $imagesz[1]*1!=300){
+                        throw new Exception("Dimensi Gambar Harus 1120 x 1120 px");
                     }
                     $ext = $file->getClientOriginalExtension();
                     $fileName =  'Slide_'.$id.'_img.'.$ext;

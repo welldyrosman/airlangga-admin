@@ -18,7 +18,6 @@
     </div>
     <script src="{{ mix('js/app/newbooktravelEvent.js') }}"></script>
     <div class="content">
-        <button class="btn btn-app" class="paydp" id="paydp">asd</button>
         <div class="container-fluid">
             <div class="card card-body table-responsive">
                 <table class="table table-hover table-bordered"
