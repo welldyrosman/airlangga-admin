@@ -50,7 +50,7 @@ Route::get('/editpack/{id}',[TourController::class,'editTour']);
 
 Route::get('/newtravel', [TourController::class, 'newtravel']);
 
-Route::get('/managestudio', [StudioController::class, 'index']);
+Route::get('managestudio', [StudioController::class, 'index'])->name('managestudio');
 Route::get('/addnewstudio', [StudioController::class, 'addnewstudio']);
 
 Route::get('/galleryvideo', [GalVidController::class, 'index']);
