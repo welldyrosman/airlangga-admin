@@ -30,7 +30,7 @@
                         <div class="card-header">
                             <h5>{{$item->pack_nm}}</h5>
                         </div>
-                        <a href="{{'editpack/'.$item->id}}">
+                        <a href="{{'/editstudio/'.$item->id}}">
                         <div class="card-body">
                             <img src="{{asset('storage/images/370x300/'.$item->file_nm)}}"class="figure-img img-fluid rounded"/>
                             <strong ><i class="fas fa-map-marker-alt mr-1"></i>{{$item->type}}</strong>

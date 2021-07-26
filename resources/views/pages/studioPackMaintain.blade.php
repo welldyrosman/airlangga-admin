@@ -11,7 +11,7 @@
 
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item active"><a href="/managetour">Pengaturan Studio</a></li>
+                <li class="breadcrumb-item active"><a href="/managestudio">Pengaturan Studio</a></li>
                 <li class="breadcrumb-item active">{{$title}}</li>
             </ol>
             </div><!-- /.col -->

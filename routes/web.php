@@ -41,7 +41,7 @@ Route::group(['middleware' => 'auth'], function () {
 // Route::get('/managetour', function () {
 //     return view('pages/tourManage');
 // });
-Route::get('managetour', [TourController::class, 'index'])->name('managetour');
+Route::get('/managetour', [TourController::class, 'index']);
 Route::get('/getbookstravel', [TourController::class, 'getbookstravel']);
 Route::get('detailbooktravel/{id}', [TourController::class, 'booktraveldet'])->name('detailbooktravel');
 
@@ -52,6 +52,7 @@ Route::get('/newtravel', [TourController::class, 'newtravel']);
 
 Route::get('managestudio', [StudioController::class, 'index'])->name('managestudio');
 Route::get('/addnewstudio', [StudioController::class, 'addnewstudio']);
+Route::get('/editstudio/{id}',[StudioController                                                   ::class,'editstudio']);
 
 Route::get('/galleryvideo', [GalVidController::class, 'index']);
 Route::get('/galleryphotos', [PicGalController::class, 'index']);
