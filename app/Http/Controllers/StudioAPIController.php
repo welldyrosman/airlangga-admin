@@ -32,8 +32,8 @@ class StudioAPIController extends Controller
     }
     function addtstudiofacility($data,$id){
         foreach($data as $fac){
-            DB::table('travel_facility')->insert([
-                'travel_id'=>$id,
+            DB::table('studio_facility')->insert([
+                'studio_id'=>$id,
                 'fac_id'=>$fac->id,
                 'note'=>$fac->note,
                 'use_mk'=> $fac->status
@@ -155,7 +155,7 @@ class StudioAPIController extends Controller
         $validated = $request->validate([
             'pack_nm' => 'required|max:45',
              'pack_price' => 'required',
-             'pack_city' => 'required',
+             'type' => 'required',
              'pack_desc' => 'required',
         ]);
         DB::beginTransaction();
@@ -166,18 +166,17 @@ class StudioAPIController extends Controller
             $pack_desc=$request->input('pack_desc');
             $pack_vid=$request->input('pack_vid');
             $pack_fac=json_decode($request->input('listFac'));
-            $pack_date=json_decode($request->input('listDate'));
+            $type=$request->input('type');
             $arg=array(
                 "pack_nm"=>$pack_nm,
-                "city"=>$pack_city,
                 "price"=>$pack_price,
                 "pack_desc"=>$pack_desc,
+                "type"=>$type,
                 "upd_time"=>Carbon::now(),
-                "vid_url"=>$pack_vid
             );
             $iscover=$this->checkcover($request,false);
             for($i=1;$i<5;$i++){
-                $imgsrc=DB::table('travel_img')->where('seq',$i)->where('travel_id',$id)->first();
+                $imgsrc=DB::table('studio_img')->where('seq',$i)->where('studio_id',$id)->first();
                 if($request->hasFile('img_'.$i)) {
                     if($imgsrc){
                         $imgbnk=DB::table('image_bank')->where('id',$imgsrc->img_id)->first();
@@ -185,26 +184,24 @@ class StudioAPIController extends Controller
                             Storage::disk('public')->delete($this->path."/".$imgbnk->file_nm);
                         }
                         DB::table('image_bank')->where('id',$imgsrc->img_id)->delete();
-                        DB::table('travel_img')
+                        DB::table('studio_img')
                         ->where('img_id',$imgsrc->img_id)
-                        ->where('travel_id',$imgsrc->travel_id)->delete();
+                        ->where('studio_id',$imgsrc->studio_id)->delete();
                     }
                     $this->insertImage($request,$id,$iscover,$i);
                 }else{
                     if($imgsrc){
-                        DB::table('travel_img')->where('seq',$i)->where('travel_id',$id)->update(
+                        DB::table('studio_img')->where('seq',$i)->where('studio_id',$id)->update(
                             array('note'=>$request->input('img_'.$i.'_note'))
                         );
                     }
                 }
             }
-            DB::table('travel_img')->where('travel_id',$id)->update(['iscover'=>0]);
-            DB::table('travel_img')->where('travel_id',$id)->where('seq',$iscover)->update(['iscover'=>1]);
-            DB::table('travel_facility')->where('travel_id',$id)->delete();
-            $this->addtravelfacility($pack_fac,$id);
-            DB::table('travel_time')->where('travel_id',$id)->delete();
-            $this->addtraveldates($pack_date,$id);
-            DB::table('travel_pack')->where('id',$id)->update($arg);
+            DB::table('studio_img')->where('studio_id',$id)->update(['iscover'=>0]);
+            DB::table('studio_img')->where('studio_id',$id)->where('seq',$iscover)->update(['iscover'=>1]);
+            DB::table('studio_facility')->where('studio_id',$id)->delete();
+            $this->addtstudiofacility($pack_fac,$id);
+            DB::table('studio_pack')->where('id',$id)->update($arg);
             DB::commit();
         } catch(Exception $e){
             DB::rollBack();
@@ -215,7 +212,7 @@ class StudioAPIController extends Controller
     public function delpack(Request $request,$id){
         DB::beginTransaction();
         try{
-            $imagelist=DB::table('travel_img')->where('travel_id',$id)->get();
+            $imagelist=DB::table('studio_img')->where('studio_id',$id)->get();
             foreach($imagelist as $image){
                 $imgsrc=DB::table('image_bank')->where('id',$image->img_id)->first();
                 if (Storage::disk('public')->exists($imgsrc->file_nm)) {
@@ -224,10 +221,9 @@ class StudioAPIController extends Controller
 
                 DB::table('image_bank')->where('id',$imgsrc->id)->delete();
             }
-            DB::table('travel_img')->where('travel_id',$id)->delete();
-            DB::table('travel_facility')->where('travel_id',$id)->delete();
-            DB::table('travel_time')->where('travel_id',$id)->delete();
-            DB::table('travel_pack')->where('id',$id)->delete();
+            DB::table('studio_img')->where('studio_id',$id)->delete();
+            DB::table('studio_facility')->where('studio_id',$id)->delete();
+            DB::table('studio_pack')->where('id',$id)->delete();
             DB::commit();
         }
         catch(Exception $e){
@@ -239,9 +235,9 @@ class StudioAPIController extends Controller
     public function disabledpack(Request $request,$id){
         DB::beginTransaction();
         try{
-            $pack=DB::table('travel_pack')->where('id',$id)->first();
+            $pack=DB::table('studio_pack')->where('id',$id)->first();
             $status=$pack->use_mk?0:1;
-            DB::table('travel_pack')->where('id',$id)->update(["use_mk"=>$status]);
+            DB::table('studio_pack')->where('id',$id)->update(["use_mk"=>$status]);
             DB::commit();
         }catch(Exception $e){
             DB::rollBack();

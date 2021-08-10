@@ -39,6 +39,10 @@ Route::post('/facility', [TourAPIController::class, 'addfacility']);
 
 
 Route::post('/studiopackage', [StudioAPIController::class, 'newpack']);
+Route::post('/studiopackage/{id}', [StudioAPIController::class, 'updpack']);
+Route::post('/facilitystudio', [StudioAPIController::class, 'addfacility']);
+Route::post('/dispackagestudio/{id}', [StudioAPIController::class, 'disabledpack']);
+Route::delete('/studiopackage/{id}', [StudioAPIController::class, 'delpack']);
 
 
 Route::post('/faq', [FaqController::class, 'newfaq']);
@@ -66,5 +70,5 @@ Route::post('/slide/{id}', [SlideController::class, 'updslide']);
 Route::delete('/slide/{id}', [SlideController::class, 'deleteslide']);
 Route::post('/disabledslide/{id}', [SlideController::class, 'disabledslide']);
 
-Route::post('/facilitystudio', [StudioAPIController::class, 'addfacility']);
+
 

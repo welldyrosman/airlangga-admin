@@ -70,7 +70,7 @@ class StudioController extends Controller
             $imagelist->push($obj);
         }
         $tourdata=DB::table('studio_pack')->where('id',$id)->first();
-        $tourtime=DB::table('studio_time')->where('studio_id',$id)->get();
+        //$tourtime=DB::table('studio_time')->where('studio_id',$id)->get();
 
         $data=array(
             'title'=>'Ubah Paket Studio',
@@ -79,7 +79,7 @@ class StudioController extends Controller
             'travel_id'=>$id,
             'datatour'=>$tourdata,
             'imagelist'=>$imagelist,
-            'tourtimes'=>$tourtime
+           // 'tourtimes'=>$tourtime
         );
         return view('pages/studioPackMaintain', $data);
     }

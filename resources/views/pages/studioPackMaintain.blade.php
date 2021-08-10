@@ -65,9 +65,9 @@
                         <input type="text" id="pack_nm" name="pack_nm" value="{{$isNew?null:$datatour->pack_nm}}" class="form-control"/>
                         <label>Tipe Photo</label>
                         <select class="form-control" id="type"  value="{{$isNew?null:$datatour->type}}" name="type">
-                            <option value="indoor">IN DOOR</option>
-                            <option value="outdoor">OUT DOOR</option>
-                            <option value="Other">Lain-Lain</option>
+                            <option value="indoor" {{$isNew?'':($datatour->type=='indoor'?'selected':'')}}>IN DOOR</option>
+                            <option value="outdoor" {{$isNew?'':($datatour->type=='outdoor'?'selected':'')}}>OUT DOOR</option>
+                            <option value="other" {{$isNew?'':($datatour->type=='other'?'selected':'')}}>Lain-Lain</option>
                         </select>
                         <label>Harga Pack</label>
                         <input type="number" id="pack_price" name="pack_price" value="{{$isNew?null:$datatour->price}}" class="form-control"/>
@@ -128,7 +128,6 @@
     </div>
   </div>
 @endsection
-<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 
 
 

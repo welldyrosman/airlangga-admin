@@ -2455,7 +2455,7 @@ $(function () {
 
   function updStuservice(data, id) {
     // alert("update service");
-    callService('/api/packagestudio/' + id, data, "POST").then(function (ret) {
+    callService('/api/studiopackage/' + id, data, "POST").then(function (ret) {
       Swal.fire({
         icon: 'success',
         title: 'Tour Baru Berhasil Disimpan',
@@ -2494,6 +2494,69 @@ $(function () {
       $('#saveBtn').html('Simpan Data');
     });
   }
+
+  $('.btndelpack').click(function (e) {
+    var _this = this;
+
+    Swal.fire({
+      title: 'Yakin untuk Hapus?',
+      text: "Data yang terhapus tidak bisa kembali!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yoi, Hapus aja!'
+    }).then(function (result) {
+      if (result.isConfirmed) {
+        alert(_this.value);
+        callService('/api/studiopackage/' + _this.value, null, "DELETE").then(function (ret) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Paket Studio sudah Berhasil Dihapus broo',
+            showConfirmButton: false,
+            timer: 1500
+          }).then(function (result) {
+            window.location.reload();
+          });
+        })["catch"](function (err) {
+          Swal.fire({
+            icon: 'error',
+            title: JSON.parse(err.responseText).message
+          });
+        });
+      }
+    });
+  });
+  $('.btndisbpack').click(function (e) {
+    var _this2 = this;
+
+    Swal.fire({
+      title: 'Anda Yakin?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya!'
+    }).then(function (result) {
+      if (result.isConfirmed) {
+        callService('/api/dispackagestudio/' + _this2.value, null, "POST").then(function (ret) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Paket Studio sudah Berhasil di update',
+            showConfirmButton: false,
+            timer: 1500
+          }).then(function (result) {
+            window.location.reload();
+          });
+        })["catch"](function (err) {
+          Swal.fire({
+            icon: 'error',
+            title: JSON.parse(err.responseText).message
+          });
+        });
+      }
+    });
+  });
 });
 
 /***/ }),

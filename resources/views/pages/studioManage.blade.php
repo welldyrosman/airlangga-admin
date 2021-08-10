@@ -36,8 +36,7 @@
                             <strong ><i class="fas fa-map-marker-alt mr-1"></i>{{$item->type}}</strong>
                             <br>
                             <strong ><i class="fas fa-tags mr-1"></i> Rp.{{number_format($item->price)}}</strong>
-                            <hr>
-                            <p class="text-muted">{{substr($item->pack_desc,1,50)}}...</p>
+
                         </div>
                         </a>
                         <div class="card-footer">
